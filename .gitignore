@@ -1,0 +1,54 @@
+# Thư mục và file do Visual Studio và .NET tạo ra
+
+## Build Folders
+[Dd]ebug/
+[Rr]elease/
+[Bb]in/
+[Oo]bj/
+[Tt]emp/
+*.pdb
+*.suo
+
+## Thư mục và file do Visual Studio tạo ra
+.vs/
+*.user
+*.log
+*.bak
+*.ncb
+*.sbr
+*.opensdf
+*.sdf
+*.tlog
+*.vshost.*
+
+## Thư mục và file cho Resharper/Rider
+*.resharper
+*.userprefs
+
+## File Package Manager
+[Pp]ackages/
+project.lock.json
+
+## File Setup/Installer
+*.msi
+*.exe
+*.dll
+
+## File Web
+*.min.js
+*.min.css
+
+# WPF-specific files (Các file đặc trưng của WPF)
+# Đây là các file cache và backup không cần đưa lên Git
+
+# Thư mục do XAML Designer tạo ra (nếu có)
+DesignTime/
+
+# File backup của các file XAML (rất hiếm, nhưng nên loại trừ)
+*.xaml.orig
+
+# Các file WPF Designer temporary
+*.tmp
+
+# Các file do Visual Studio tạo ra trong quá trình gỡ lỗi
+vshost.*
