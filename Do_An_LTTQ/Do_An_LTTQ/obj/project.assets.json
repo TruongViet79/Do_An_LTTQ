@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\IT008.TH\\Do_An_LTTQ\\Do_An_LTTQ\\Do_An_LTTQ.csproj",
+      "projectUniqueName": "D:\\IT008.TH\\Do_An_Github\\Do_An_LTTQ\\Do_An_LTTQ\\Do_An_LTTQ\\Do_An_LTTQ.csproj",
       "projectName": "Do_An_LTTQ",
-      "projectPath": "D:\\IT008.TH\\Do_An_LTTQ\\Do_An_LTTQ\\Do_An_LTTQ.csproj",
+      "projectPath": "D:\\IT008.TH\\Do_An_Github\\Do_An_LTTQ\\Do_An_LTTQ\\Do_An_LTTQ\\Do_An_LTTQ.csproj",
       "packagesPath": "C:\\Users\\ASUS\\.nuget\\packages\\",
-      "outputPath": "D:\\IT008.TH\\Do_An_LTTQ\\Do_An_LTTQ\\obj\\",
+      "outputPath": "D:\\IT008.TH\\Do_An_Github\\Do_An_LTTQ\\Do_An_LTTQ\\Do_An_LTTQ\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
