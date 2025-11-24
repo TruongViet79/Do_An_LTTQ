@@ -10,21 +10,56 @@
 
     <Grid>
         <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Width="350">
-            <TextBlock Text="Đăng Nhập" 
+            <TextBlock Text="Sign in" 
                        FontSize="28" 
                        FontWeight="Bold" 
-                       Margin="0,0,0,15" 
+                       Margin="0,5,0,15" 
                        HorizontalAlignment="Center"/>
-            <Label Content="Tên đăng nhập" 
+            <Label Content="User name" 
                    FontSize="20" 
-                   Margin="0,10,0,0"></Label>
-            <TextBox x:Name="Username" 
+                   Margin="5,10,5,0"></Label>
+            <TextBox x:Name="txtUsername" 
                      Height="30" 
                      Padding="5" 
-                     Margin="0,0,0,10" 
+                     Margin="5,0,5,10" 
                      Background="#FF0063EC"
                      Foreground="White"></TextBox>
-            
+            <Label Content="Password:"
+                   FontSize="20"
+                   Margin="5,0,5,0"></Label>
+            <PasswordBox x:Name="pwPassword"
+                         Height="30"
+                         Padding="5"
+                         Margin="5,0,5,10"
+                         Background="#2a475e"
+                         Foreground="White"
+                         BorderThickness="0"></PasswordBox>
+            <Grid Margin="5,15,0,5">
+                <Button Content="Sign in"
+                        HorizontalAlignment="Right"
+                        Width="100"
+                        Height="20"
+                        Background="#FF2D588C"
+                        Foreground="White"
+                        BorderThickness="0"
+                        Cursor="Hand"
+                        Click="SigninButton_Click"></Button>
+                <Button Content="Sign up"
+                        HorizontalAlignment="Left"
+                        Width="100"
+                        Height="20"
+                        Background="#FFB0B8D2"
+                        Foreground="#FF0A2A7E"
+                        BorderThickness="0"
+                        Cursor="Hand"
+                        Click="SignupButton_Click">
+                    <Button.ToolTip>
+                        <ToolTip Background="Aqua" Foreground="#FF071D56" BorderBrush="#66c0f4">
+                            <TextBlock Text="If you don't have an account, click here!" Padding="5"></TextBlock>
+                        </ToolTip>
+                    </Button.ToolTip>
+                </Button>
+            </Grid>
         </StackPanel>
     </Grid>
 

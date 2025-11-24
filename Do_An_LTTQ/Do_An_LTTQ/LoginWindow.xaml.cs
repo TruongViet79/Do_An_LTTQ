@@ -23,5 +23,28 @@ namespace Do_An_LTTQ
         {
             InitializeComponent();
         }
+
+        private void SigninButton_Click(object sender, RoutedEventArgs e)
+        {
+            string username = txtUsername.Text;
+            string password = pwPassword.Password;
+
+            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
+            {
+                MessageBox.Show("Please enter your username and password.", "Missing Information", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            MainWindow main = new MainWindow();
+            main.Show();
+
+            this.Close();
+        }
+        private void SignupButton_Click(object sender, RoutedEventArgs e)
+        {
+            SignupWindow signup = new SignupWindow();
+            signup.Show();
+            this.Close();
+        }
     }
 }
