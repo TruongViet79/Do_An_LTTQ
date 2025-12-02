@@ -1,27 +1,39 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+﻿using System.Windows;
 
 namespace Do_An_LTTQ
 {
-    /// <summary>
-    /// Interaction logic for SignupWindow.xaml
-    /// </summary>
     public partial class SignupWindow : Window
     {
         public SignupWindow()
         {
             InitializeComponent();
+        }
+
+        private void OkButton_Click(object sender, RoutedEventArgs e)
+        {
+            // 1. Kiểm tra xem có bỏ trống ô nào không
+            if (string.IsNullOrEmpty(txtUsername.Text) ||
+                string.IsNullOrEmpty(pwPassword.Password) ||
+                string.IsNullOrEmpty(pwCFPassword.Password))
+            {
+                MessageBox.Show("Please fill in all fields.", "Missing Information", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            // 2. Kiểm tra mật khẩu và mật khẩu xác nhận có giống nhau không
+            if (pwPassword.Password != pwCFPassword.Password)
+            {
+                MessageBox.Show("Those passwords didn’t match. Try again. ", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            // 3. Nếu mọi thứ OK -> Thông báo và quay về Login
+            MessageBox.Show("Sign up successful! Returning to login screen.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+
+            LoginWindow loginWindow = new LoginWindow();
+            loginWindow.Show();
+
+            this.Close(); // Đóng cửa sổ đăng ký
         }
     }
 }
