@@ -4,11 +4,213 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Do_An_LTTQ.View.UserPage"
-      mc:Ignorable="d" 
-      d:DesignHeight="540" d:DesignWidth="960"
+      mc:Ignorable="d"
+      xmlns:fa="http://schemas.fontawesome.io/icons/"
+      d:DesignHeight="540" d:DesignWidth="995"
       Title="SettingsPage">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Border  Margin="20" Grid.ColumnSpan="2" CornerRadius="20" BorderThickness="0" BorderBrush="Black" Background="#E8D9F0">
+            <Border Margin="20" Background="White" CornerRadius="20">
+                <TabControl TabStripPlacement="Left" BorderThickness="0">
+                    <TabItem Header="👤 Profile" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center"
+         Style="{StaticResource TabControlKey}">
+                        <ScrollViewer VerticalScrollBarVisibility="Auto">
+                            <StackPanel Margin="20">
+                                <TextBlock Text="User Profile" FontSize="24" FontWeight="Bold" 
+                      FontFamily="Comic Sans MS" Margin="10"/>
 
-    <Grid Background="Gray">
-        
+                                <!-- Avatar -->
+                                <StackPanel HorizontalAlignment="Center" Margin="5">
+                                    <Ellipse Width="100" Height="100" Margin="10">
+                                        <Ellipse.Fill>
+                                            <ImageBrush ImageSource="/Resources/idle2.png" Stretch="UniformToFill"/>
+                                        </Ellipse.Fill>
+                                    </Ellipse>
+                                    <Button Content="Change Avatar" Width="160" Height="40" 
+                       Background="Lavender" Foreground="Black" 
+                       FontWeight="Bold" Cursor="Hand" Margin="5"/>
+                                </StackPanel>
+
+                                <!-- Profile Form -->
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="120"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Username:" 
+                          VerticalAlignment="Center" FontSize="14" Margin="10"/>
+                                    <TextBox x:Name="txtUsername" Grid.Row="0" Grid.Column="1" 
+                        Text="May1804" Margin="10" Padding="10" FontSize="14"/>
+
+                                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Email:" 
+                          VerticalAlignment="Center" FontSize="14" Margin="10"/>
+                                    <TextBox x:Name="txtEmail" Grid.Row="1" Grid.Column="1" 
+                        Text="may1804@example.com" Margin="10" Padding="10" FontSize="14"/>
+
+                                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Phone:" 
+                          VerticalAlignment="Center" FontSize="14" Margin="10"/>
+                                    <TextBox x:Name="txtPhone" Grid.Row="2" Grid.Column="1" 
+                        Text="0123456789" Margin="10" Padding="10" FontSize="14"/>
+
+                                </Grid>
+                                <GroupBox Header="Preferences" Padding="15" Margin="10">
+                                    <StackPanel>
+                                        <CheckBox Content="Receive email notifications" 
+                             IsChecked="True" Margin="5" FontSize="14"/>
+                                        <CheckBox Content="Auto login" 
+                             IsChecked="False" Margin="5" FontSize="14"/>
+                                        <CheckBox Content="Show online status" 
+                             IsChecked="True" Margin="5" FontSize="14"/>
+                                    </StackPanel>
+                                </GroupBox>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
+                                    <Button Content="Save Changes" Width="160" Height="40" 
+                       Background="#4CAF50" Foreground="White" 
+                       FontWeight="Bold" Margin="10" Click="SaveProfile"/>
+                                    <Button Content="Reset" Width="100" Height="40" 
+                       Margin="5" Click="ResetProfile"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </ScrollViewer>
+                    </TabItem>
+                    <TabItem Header="🎨 Theme" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center"
+                             Style="{StaticResource TabControlKey}">
+                        <Grid Margin="20">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid Grid.Row="1">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+
+                                <Button x:Name="btnLightTheme" Grid.Row="0" Grid.Column="0" 
+                                        Width="200" Margin="67,20,66,10" Tag="Light"
+                                        Click="ChangeTheme">
+                                    <StackPanel>
+                                        <Border Background="White" BorderBrush="Gray" BorderThickness="2"  Margin="10"
+                                                Height="80" CornerRadius="10" Width="150"/>
+                                        <TextBlock Text="Light" FontWeight="Bold" FontSize="18" 
+                                                   Margin="5" HorizontalAlignment="Center"/>
+                                    </StackPanel>
+                                </Button>
+
+                                <Button x:Name="btnDarkTheme" Grid.Row="0" Grid.Column="1"
+                                        Width="200" Margin="67,20,66,10" Tag="Dark"
+                                        Click="ChangeTheme">
+                                    <StackPanel>
+                                        <Border Background="#1E1E1E" BorderBrush="Gray" BorderThickness="2" Margin="10"
+                                                Height="80" CornerRadius="10" Width="150"/>
+                                        <TextBlock Text="Dark" FontWeight="Bold" FontSize="18" 
+                                                   Margin="5" HorizontalAlignment="Center"/>
+                                    </StackPanel>
+                                </Button>
+
+                                <Button x:Name="btnPurpleTheme" Grid.Row="1" Grid.Column="0"
+                                        Width="200" Margin="67,20,66,10" Tag="Purple"
+                                        Click="ChangeTheme">
+                                    <StackPanel>
+                                        <Border Background="#9C27B0" BorderBrush="Gray" BorderThickness="2" Margin="10"
+                                                Height="80" CornerRadius="10" Width="150"/>
+                                        <TextBlock Text="Purple" FontWeight="Bold" FontSize="18" 
+                                                   Margin="5" HorizontalAlignment="Center"/>
+                                    </StackPanel>
+                                </Button>
+
+                                <Button x:Name="btnBlueTheme" Grid.Row="1" Grid.Column="1"
+                                        Width="200" Margin="67,20,66,10" Tag="Blue"
+                                        Click="ChangeTheme">
+                                    <StackPanel>
+                                        <Border Background="#2196F3" BorderBrush="Gray" BorderThickness="2" Margin="10"
+                                                Height="80" CornerRadius="10" Width="150"/>
+                                        <TextBlock Text="Blue" FontWeight="Bold" FontSize="18" 
+                                                   Margin="5" HorizontalAlignment="Center"/>
+                                    </StackPanel>
+                                </Button>
+                            </Grid>
+
+                            <TextBlock Grid.Row="2" x:Name="txtCurrentTheme" Text="Current: Light" 
+                                       FontSize="16" Foreground="Green" Margin="10" 
+                                       HorizontalAlignment="Center"/>
+                        </Grid>
+                    </TabItem>
+                    <TabItem Header="📏 Size" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center"
+                             Style="{StaticResource TabControlKey}">
+                        <StackPanel Margin="20">
+                            <TextBlock Text="Font Size" FontSize="24" FontWeight="Bold" 
+                                      FontFamily="Comic Sans MS" Margin="0,0,0,20"/>
+
+                            <GroupBox Header="Select Font Size" Padding="15" Margin="0,0,0,20">
+                                <StackPanel>
+                                    <RadioButton Content="Small (12px)" GroupName="FontSize" 
+                                               Margin="10" FontSize="14" Tag="12" Checked="RadioButton_Checked"/>
+                                    <RadioButton Content="Medium (14px)" GroupName="FontSize" 
+                                               Margin="10" FontSize="14" IsChecked="True" Tag="14" Checked="RadioButton_Checked"/>
+                                    <RadioButton Content="Large (16px)" GroupName="FontSize" 
+                                               Margin="10" FontSize="14" Tag="16" Checked="RadioButton_Checked"/>
+                                    <RadioButton Content="Extra Large (18px)" GroupName="FontSize" 
+                                               Margin="10" FontSize="14" Tag="18" Checked="RadioButton_Checked"/>
+                                </StackPanel>
+                            </GroupBox>
+
+                            <Border Background="Lavender" Padding="15" CornerRadius="10">
+                                <TextBlock x:Name="txtPreview" 
+                                          Text="This is a preview text. The quick brown fox jumps over the lazy dog."
+                                          TextWrapping="Wrap" FontSize="14"/>
+                            </Border>
+                        </StackPanel>
+                    </TabItem>
+
+                    <TabItem Header="🌐 Language" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center"
+                             Style="{StaticResource TabControlKey}">
+                        <StackPanel Margin="20">
+                            <TextBlock Text="Select Language" FontSize="24" FontWeight="Bold" 
+                                      FontFamily="Comic Sans MS" Margin="10"/>
+
+                            <GroupBox Header="Language Options" Padding="15">
+                                <StackPanel>
+                                    <RadioButton Content="🇻🇳 Tiếng Việt" GroupName="Language" 
+                                               Margin="10" FontSize="16" IsChecked="True" 
+                                               Checked="Language_Changed" Tag="vi"/>
+                                    <RadioButton Content="🇬🇧 English" GroupName="Language" 
+                                               Margin="10" FontSize="16" Checked="Language_Changed" Tag="en"/>
+                                    <RadioButton Content="🇯🇵 日本語 (Japanese)" GroupName="Language" 
+                                               Margin="10" FontSize="16" Checked="Language_Changed" Tag="ja"/>
+                                    <RadioButton Content="🇰🇷 한국어 (Korean)" GroupName="Language" 
+                                               Margin="10" FontSize="16" Checked="Language_Changed" Tag="ko"/>
+                                    <RadioButton Content="🇨🇳 中文 (Chinese)" GroupName="Language" 
+                                               Margin="10" FontSize="16" Checked="Language_Changed" Tag="zh"/>
+                                    <RadioButton Content="🇫🇷 Français (French)" GroupName="Language" 
+                                               Margin="10" FontSize="16" Checked="Language_Changed" Tag="fr"/>
+                                </StackPanel>
+                            </GroupBox>
+
+                            <TextBlock x:Name="txtCurrentLanguage" Text="Current: Tiếng Việt" 
+                                      FontSize="14" Foreground="Green" Margin="10,20,0,0"/>
+
+                            <TextBlock Text="⚠️ Restart required to apply language changes." 
+                                      FontSize="12" Foreground="Orange" TextWrapping="Wrap" Margin="10,10,0,0"/>
+                        </StackPanel>
+                    </TabItem>
+                </TabControl>
+            </Border>
+        </Border>
     </Grid>
 </Page>

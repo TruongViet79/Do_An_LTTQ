@@ -34,5 +34,12 @@ namespace Do_An_LTTQ.View.UserPage
         {
             if (!FriendList.IsMouseOver) { FriendList.Width = 100; }
         }
+
+        private void ButtonProfile_Click(object sender, RoutedEventArgs e)
+        {
+            var frame = System.Windows.Navigation.NavigationService.GetNavigationService(this);
+            frame?.Navigate(new SettingsPage());
+
+        }
     }
 }

@@ -6,13 +6,13 @@
       xmlns:local="clr-namespace:Do_An_LTTQ.View.UserPage"
       xmlns:fa="http://schemas.fontawesome.io/icons/"
       mc:Ignorable="d" 
-      d:DesignHeight="720" d:DesignWidth="1280"
+      d:DesignHeight="540" d:DesignWidth="995"
       Title="DashboardPage">
 
     <Grid>
         <Border  Margin="20" Grid.Column="1" Grid.RowSpan="3" Grid.ColumnSpan="2" CornerRadius="30" BorderThickness="0" BorderBrush="Black" Background="#E8D9F0">
             <StackPanel Orientation="Vertical">
-                <StackPanel Orientation="Horizontal">
+                <StackPanel Orientation="Horizontal" Height="117">
                     <StackPanel Orientation="Vertical" Margin="15" Width="200">
                         <TextBlock Text="Welcome" Margin="10" FontSize="20" VerticalAlignment="Center" TextAlignment="Center" FontFamily="Comic Sans MS"></TextBlock>
                         <TextBlock Text="May1804" FontWeight="Bold" FontSize="30" VerticalAlignment="Center" TextAlignment="Center" FontFamily="Comic Sans MS"></TextBlock>
@@ -25,7 +25,7 @@
                             <TextBox Background="Transparent" BorderThickness="0" Padding="35,0,5,0" VerticalContentAlignment="Center"
                          FontSize="15"
                          Text="Search game"
-                         Foreground="Gray" HorizontalAlignment="Center" Width="210"/>
+                         Foreground="Gray" HorizontalAlignment="Center" Width="310"/>
                         </Grid>
                     </Border>
                     <StackPanel Orientation="Horizontal">
@@ -35,11 +35,13 @@
                         <Button x:Name="btnNoti" Background="Transparent" Style="{StaticResource RoundButtonStyle}" Margin="20">
                             <fa:ImageAwesome Icon="Bell" Width="50" Height="50"/>
                         </Button>
-                        <Ellipse Height="71" Width="71" Margin="20">
-                            <Ellipse.Fill>
-                                <ImageBrush ImageSource="/Resources/idle2.png" Stretch="UniformToFill"/>
-                            </Ellipse.Fill>
-                        </Ellipse>
+                        <Button Margin="20" Background="Transparent" BorderThickness="0" Style="{StaticResource RoundButtonStyle}" Click="ButtonProfile_Click">
+                            <Ellipse Width="50" Height="50">
+                                <Ellipse.Fill>
+                                    <ImageBrush ImageSource="/Resources/idle2.png" Stretch="UniformToFill"/>
+                                </Ellipse.Fill>
+                            </Ellipse>
+                        </Button>
                     </StackPanel>
                 </StackPanel>
                 <Grid Height="520" Width="950">
@@ -51,16 +53,147 @@
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition></RowDefinition>
-                        <RowDefinition Height="2*"></RowDefinition>
+                        <RowDefinition Height="4*"></RowDefinition>
                         <RowDefinition></RowDefinition>
-                        <RowDefinition Height="2*"></RowDefinition>
+                        <RowDefinition Height="4*"></RowDefinition>
                     </Grid.RowDefinitions>
-                    <TextBlock Grid.Row="0" Text="Popular Free Games" Margin="10"
+                    <TextBlock Grid.Row="0" Text="Popular Free Games:" Margin="10"
                        TextAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" FontSize="20"></TextBlock>
                     <Button x:Name="btnFGame" Grid.Column="2" Grid.Row="0" Content="View all..." Style="{StaticResource IconTextButtonStyle}" Background="Transparent" FontSize="20"/>
                     <TextBlock Grid.Row="2" Text="Popular Paid Game:" Margin="10"
                        TextAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" FontSize="20"></TextBlock>
                     <Button x:Name="btnPGame" Grid.Column="2" Grid.Row="2" Content="View all..." Style="{StaticResource IconTextButtonStyle}" Background="Transparent" FontSize="20"/>
+                    <ScrollViewer Grid.Row="1" Grid.ColumnSpan="3" Grid.RowSpan="2" VerticalAlignment="Top"
+                                  HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" Margin="0,0,10,0">
+                        <StackPanel Orientation="Horizontal" Width="1320">
+                            <Button Style="{StaticResource GameCardButtonStyle}">
+                                <StackPanel>
+                                    <Rectangle Style="{StaticResource GameImageRectangleStyle}">
+                                        <Rectangle.Fill>
+                                            <ImageBrush ImageSource="/Resources/idle2.png" Stretch="UniformToFill"/>
+                                        </Rectangle.Fill>
+                                    </Rectangle>
+                                    <TextBlock Text="Minecraft" Style="{StaticResource GameNameTextStyle}"/>
+                                </StackPanel>
+                            </Button>
+                            <Button Style="{StaticResource GameCardButtonStyle}">
+                                <StackPanel>
+                                    <Rectangle Style="{StaticResource GameImageRectangleStyle}">
+                                        <Rectangle.Fill>
+                                            <ImageBrush ImageSource="/Resources/idle2.png" Stretch="UniformToFill"/>
+                                        </Rectangle.Fill>
+                                    </Rectangle>
+                                    <TextBlock Text="Minecraft" Style="{StaticResource GameNameTextStyle}"/>
+                                </StackPanel>
+                            </Button>
+                            <Button Style="{StaticResource GameCardButtonStyle}">
+                                <StackPanel>
+                                    <Rectangle Style="{StaticResource GameImageRectangleStyle}">
+                                        <Rectangle.Fill>
+                                            <ImageBrush ImageSource="/Resources/idle2.png" Stretch="UniformToFill"/>
+                                        </Rectangle.Fill>
+                                    </Rectangle>
+                                    <TextBlock Text="Minecraft" Style="{StaticResource GameNameTextStyle}"/>
+                                </StackPanel>
+                            </Button>
+                            <Button Style="{StaticResource GameCardButtonStyle}">
+                                <StackPanel>
+                                    <Rectangle Style="{StaticResource GameImageRectangleStyle}">
+                                        <Rectangle.Fill>
+                                            <ImageBrush ImageSource="/Resources/idle2.png" Stretch="UniformToFill"/>
+                                        </Rectangle.Fill>
+                                    </Rectangle>
+                                    <TextBlock Text="Minecraft" Style="{StaticResource GameNameTextStyle}"/>
+                                </StackPanel>
+                            </Button>
+                            <Button Style="{StaticResource GameCardButtonStyle}">
+                                <StackPanel>
+                                    <Rectangle Style="{StaticResource GameImageRectangleStyle}">
+                                        <Rectangle.Fill>
+                                            <ImageBrush ImageSource="/Resources/idle2.png" Stretch="UniformToFill"/>
+                                        </Rectangle.Fill>
+                                    </Rectangle>
+                                    <TextBlock Text="Minecraft" Style="{StaticResource GameNameTextStyle}"/>
+                                </StackPanel>
+                            </Button>
+                            <Button Style="{StaticResource GameCardButtonStyle}">
+                                <StackPanel>
+                                    <Rectangle Style="{StaticResource GameImageRectangleStyle}">
+                                        <Rectangle.Fill>
+                                            <ImageBrush ImageSource="/Resources/idle2.png" Stretch="UniformToFill"/>
+                                        </Rectangle.Fill>
+                                    </Rectangle>
+                                    <TextBlock Text="Minecraft" Style="{StaticResource GameNameTextStyle}"/>
+                                </StackPanel>
+                            </Button>
+
+                        </StackPanel>
+                    </ScrollViewer>
+                    <ScrollViewer Grid.Row="3" Grid.ColumnSpan="3" VerticalAlignment="Center"
+                                  HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" Margin="0,0,10,0">
+                        <StackPanel Orientation="Horizontal" Width="1320">
+                            <Button Style="{StaticResource GameCardButtonStyle}">
+                                <StackPanel>
+                                    <Rectangle Style="{StaticResource GameImageRectangleStyle}">
+                                        <Rectangle.Fill>
+                                            <ImageBrush ImageSource="/Resources/idle2.png" Stretch="UniformToFill"/>
+                                        </Rectangle.Fill>
+                                    </Rectangle>
+                                    <TextBlock Text="Minecraft" Style="{StaticResource GameNameTextStyle}"/>
+                                </StackPanel>
+                            </Button>
+                            <Button Style="{StaticResource GameCardButtonStyle}">
+                                <StackPanel>
+                                    <Rectangle Style="{StaticResource GameImageRectangleStyle}">
+                                        <Rectangle.Fill>
+                                            <ImageBrush ImageSource="/Resources/idle2.png" Stretch="UniformToFill"/>
+                                        </Rectangle.Fill>
+                                    </Rectangle>
+                                    <TextBlock Text="Minecraft" Style="{StaticResource GameNameTextStyle}"/>
+                                </StackPanel>
+                            </Button>
+                            <Button Style="{StaticResource GameCardButtonStyle}">
+                                <StackPanel>
+                                    <Rectangle Style="{StaticResource GameImageRectangleStyle}">
+                                        <Rectangle.Fill>
+                                            <ImageBrush ImageSource="/Resources/idle2.png" Stretch="UniformToFill"/>
+                                        </Rectangle.Fill>
+                                    </Rectangle>
+                                    <TextBlock Text="Minecraft" Style="{StaticResource GameNameTextStyle}"/>
+                                </StackPanel>
+                            </Button>
+                            <Button Style="{StaticResource GameCardButtonStyle}">
+                                <StackPanel>
+                                    <Rectangle Style="{StaticResource GameImageRectangleStyle}">
+                                        <Rectangle.Fill>
+                                            <ImageBrush ImageSource="/Resources/idle2.png" Stretch="UniformToFill"/>
+                                        </Rectangle.Fill>
+                                    </Rectangle>
+                                    <TextBlock Text="Minecraft" Style="{StaticResource GameNameTextStyle}"/>
+                                </StackPanel>
+                            </Button>
+                            <Button Style="{StaticResource GameCardButtonStyle}">
+                                <StackPanel>
+                                    <Rectangle Style="{StaticResource GameImageRectangleStyle}">
+                                        <Rectangle.Fill>
+                                            <ImageBrush ImageSource="/Resources/idle2.png" Stretch="UniformToFill"/>
+                                        </Rectangle.Fill>
+                                    </Rectangle>
+                                    <TextBlock Text="Minecraft" Style="{StaticResource GameNameTextStyle}"/>
+                                </StackPanel>
+                            </Button>
+                            <Button Style="{StaticResource GameCardButtonStyle}">
+                                <StackPanel>
+                                    <Rectangle Style="{StaticResource GameImageRectangleStyle}">
+                                        <Rectangle.Fill>
+                                            <ImageBrush ImageSource="/Resources/idle2.png" Stretch="UniformToFill"/>
+                                        </Rectangle.Fill>
+                                    </Rectangle>
+                                    <TextBlock Text="Minecraft" Style="{StaticResource GameNameTextStyle}"/>
+                                </StackPanel>
+                            </Button>
+                        </StackPanel>
+                    </ScrollViewer>
                     <Border x:Name="FriendList" Grid.Row="0" Grid.Column="2" Grid.RowSpan="4" Grid.ColumnSpan="2"
                         Width="100" BorderBrush="Gray" BorderThickness="1" CornerRadius="20" Height="500" Background="White"
                         HorizontalAlignment="Right"
