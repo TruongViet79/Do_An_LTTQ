@@ -29,7 +29,6 @@
 
   <ItemGroup>
     <Folder Include="ChooseOption\" />
-    <Folder Include="View\UserControlPage\" />
   </ItemGroup>
 
   <ItemGroup>
