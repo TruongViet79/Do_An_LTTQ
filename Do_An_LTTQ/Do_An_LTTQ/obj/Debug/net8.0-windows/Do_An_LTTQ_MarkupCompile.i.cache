@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-D:\IT008.TH\Do_An_Github\Do_An_LTTQ\Do_An_LTTQ\Do_An_LTTQ\obj\Debug\net8.0-windows\
+C:\Users\dfgd\OneDrive\Desktop\LTTQ\DoAnLTTQ\Do_An_LTTQ\Do_An_LTTQ\obj\Debug\net8.0-windows\
 Do_An_LTTQ
 none
 false
 TRACE;DEBUG;NET;NET8_0;NETCOREAPP;WINDOWS;WINDOWS7_0;NET5_0_OR_GREATER;NET6_0_OR_GREATER;NET7_0_OR_GREATER;NET8_0_OR_GREATER;NETCOREAPP3_0_OR_GREATER;NETCOREAPP3_1_OR_GREATER;WINDOWS7_0_OR_GREATER
-D:\IT008.TH\Do_An_Github\Do_An_LTTQ\Do_An_LTTQ\Do_An_LTTQ\App.xaml
-3884045278
+C:\Users\dfgd\OneDrive\Desktop\LTTQ\DoAnLTTQ\Do_An_LTTQ\Do_An_LTTQ\App.xaml
+81233160122
 
-8923032823
-198-192518753
-LoginWindow.xaml;MainWindow.xaml;SignupWindow.xaml;
+121876992499
+199563416999
+LoginWindow.xaml;Resources\Dictionary.xaml;SignupWindow.xaml;View\MainWindow.xaml;View\UserPage\DashboardPage.xaml;View\UserPage\LibaryPage.xaml;View\UserPage\SettingsPage.xaml;View\UserPage\StorePage.xaml;
 
-True
+False
 

@@ -35,7 +35,7 @@ namespace Do_An_LTTQ
                 return;
             }
 
-            MainWindow main = new MainWindow();
+            Do_An_LTTQ.View.MainWindow main = new Do_An_LTTQ.View.MainWindow();
             main.Show();
 
             this.Close();
