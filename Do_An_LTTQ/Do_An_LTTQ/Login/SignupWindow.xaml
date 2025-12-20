@@ -59,7 +59,8 @@
                     Foreground="White"
                     BorderThickness="0"
                     Cursor="Hand"
-                    Click="OkButton_Click">
+                    Click="OkButton_Click"
+                    IsDefault="True">
             </Button>
         </StackPanel>
     </Grid>

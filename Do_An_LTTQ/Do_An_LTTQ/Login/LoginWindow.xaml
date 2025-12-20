@@ -43,7 +43,8 @@
                         Foreground="White"
                         BorderThickness="0"
                         Cursor="Hand"
-                        Click="SigninButton_Click"></Button>
+                        Click="SigninButton_Click"
+                        IsDefault="True"></Button>
                 <Button Content="Sign up"
                         HorizontalAlignment="Left"
                         Width="100"

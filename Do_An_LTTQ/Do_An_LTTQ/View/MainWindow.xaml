@@ -25,13 +25,13 @@
                     Click="btnDashboard_Click">
                 <StackPanel Orientation="Horizontal">
                     <fa:ImageAwesome Icon="Home" Width="30" Height="30" Margin="5"/>
-                    <TextBlock Text="Dashboard" FontSize="20" Margin="10"/>
+                    <TextBlock Text="Dashboard" FontSize="{DynamicResource FontSizeLarge}" Margin="10"/>
                 </StackPanel>
             </Button>
             <Button Style="{StaticResource IconTextButtonStyle}" Margin="10" x:Name="btnStore">
                 <StackPanel Orientation="Horizontal" Width="158">
                     <fa:ImageAwesome Icon="ShoppingCart" Width="30" Height="30" Margin="5"/>
-                    <TextBlock Text="Store" FontSize="20" Margin="10"/>
+                    <TextBlock Text="Store" FontSize="{DynamicResource FontSizeLarge}" Margin="10"/>
                 </StackPanel>
             </Button>
 
@@ -39,14 +39,14 @@
                     Click="btnSettings_Click">
                 <StackPanel Orientation="Horizontal" Width="158">
                     <fa:ImageAwesome Icon="Gear" Width="30" Height="30" Margin="5"/>
-                    <TextBlock Text="Settings" FontSize="20" Margin="10"/>
+                    <TextBlock Text="Settings" FontSize="{DynamicResource FontSizeLarge}" Margin="10"/>
                 </StackPanel>
             </Button>
 
             <Button Style="{StaticResource IconTextButtonStyle}" Margin="10" x:Name="btnLibrary">
                 <StackPanel Orientation="Horizontal" Width="158">
                     <fa:ImageAwesome Icon="ShoppingBag" Width="30" Height="30" Margin="5"/>
-                    <TextBlock Text="Library" FontSize="20" Margin="10"/>
+                    <TextBlock Text="Library" FontSize="{DynamicResource FontSizeLarge}" Margin="10"/>
                 </StackPanel>
             </Button>
             <Border Height="276" Margin="20" Background="Lavender" CornerRadius="20" BorderThickness="2" BorderBrush="Lavender">
@@ -59,7 +59,7 @@
                     <TextBlock Text="Last game played:" TextAlignment="Center" FontSize="20" FontWeight="Bold" Margin="5" FontFamily="Comic Sans MS"></TextBlock>
                     <Button x:Name="btnPAgain" Style="{StaticResource IconTextButtonStyle}" Margin="5">
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Play again?" FontSize="20" Margin="10" FontFamily="Comic Sans MS" FontWeight="Bold" Width="150" TextAlignment="Center" Height="45" RenderTransformOrigin="0.519,1.223"/>
+                            <TextBlock Text="Play again?" FontSize="{DynamicResource FontSizeLarge}" Margin="10" FontFamily="Comic Sans MS" FontWeight="Bold" Width="150" TextAlignment="Center" Height="45" RenderTransformOrigin="0.519,1.223"/>
                         </StackPanel>
                     </Button>
                 </StackPanel>

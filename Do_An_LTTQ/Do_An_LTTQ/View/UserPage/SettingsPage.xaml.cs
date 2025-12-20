@@ -23,8 +23,28 @@ namespace Do_An_LTTQ.View.UserPage
         public SettingsPage()
         {
             InitializeComponent();
+
+            LoadCurrentSetting();
         }
 
+        private void LoadCurrentSetting()
+        {
+            // 1. Lấy cỡ chữ đang dùng trong App ra (nếu chưa có thì mặc định là 14)
+            double currentSize = 14;
+            if (Application.Current.Resources.Contains("FontSizeNormal"))
+            {
+                currentSize = (double)Application.Current.Resources["FontSizeNormal"];
+            }
+
+            // 2. Tick lại vào đúng cái nút tương ứng
+            // Lưu ý: Phải ngắt sự kiện Checked tạm thời nếu không muốn nó chạy logic update dư thừa (tuỳ chọn)
+            switch (currentSize)
+            {
+                case 12: rbSmall.IsChecked = true; break;
+                case 14: rbMedium.IsChecked = true; break;
+                case 16: rbLarge.IsChecked = true; break;
+            }
+        }
         private void ChangeTheme(object sender, RoutedEventArgs e)
         {
             if (sender is Button btn && btn.Tag != null)
@@ -38,8 +58,17 @@ namespace Do_An_LTTQ.View.UserPage
         {
             if (sender is RadioButton rb  && rb.Tag != null)
             {
-                int size = int.Parse(rb.Tag.ToString());
-                txtPreview.FontSize = size;
+                double baseSize = double .Parse(rb.Tag.ToString());
+                if (txtPreview != null)
+                {
+                    txtPreview.FontSize = baseSize;
+                }
+
+                Application.Current.Resources["FontSizeNormal"] =baseSize;
+
+                Application.Current.Resources["FontSizeLarge"] = baseSize * 1.5;
+
+                Application.Current.Resources["FontSizeHuge"] = baseSize * 2.0;
             }
         }
 
