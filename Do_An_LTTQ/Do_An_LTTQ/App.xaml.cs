@@ -9,6 +9,7 @@ namespace Do_An_LTTQ
     /// </summary>
     public partial class App : Application
     {
+
     }
 
 }

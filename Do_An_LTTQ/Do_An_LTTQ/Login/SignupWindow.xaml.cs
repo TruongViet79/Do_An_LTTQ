@@ -14,7 +14,8 @@ namespace Do_An_LTTQ
             // 1. Kiểm tra xem có bỏ trống ô nào không
             if (string.IsNullOrEmpty(txtUsername.Text) ||
                 string.IsNullOrEmpty(pwPassword.Password) ||
-                string.IsNullOrEmpty(pwCFPassword.Password))
+                string.IsNullOrEmpty(pwCFPassword.Password) ||
+                string.IsNullOrEmpty(txtEmail.Text))
             {
                 MessageBox.Show("Please fill in all fields.", "Missing Information", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
