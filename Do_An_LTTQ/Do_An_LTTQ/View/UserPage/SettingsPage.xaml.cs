@@ -44,15 +44,59 @@ namespace Do_An_LTTQ.View.UserPage
                 case 14: rbMedium.IsChecked = true; break;
                 case 16: rbLarge.IsChecked = true; break;
             }
+
+            //Language
+            if (lgVN.IsChecked == true)
+                txtCurrentLanguage.Text = $"Current: {lgVN.Content}";
+            else if (lgEL.IsChecked == true)
+                txtCurrentLanguage.Text = $"Current: {lgEL.Content}";
+            ;
+
+            //Theme
+
+
         }
         private void ChangeTheme(object sender, RoutedEventArgs e)
+{
+    if (sender is Button btn && btn.Tag != null)
+    {
+        // 1. Lấy tên theme từ Tag của nút (VD: "Blue", "Light")
+        string theme = btn.Tag.ToString(); 
+
+        // 2. Cập nhật dòng chữ hiển thị "Current: ..."
+        if (txtCurrentTheme != null)
         {
-            if (sender is Button btn && btn.Tag != null)
-            {
-                string theme = btn.Tag.ToString(); // Lấy "Light", "Dark", "Purple", "Blue"
-                txtCurrentTheme.Text = $"Current: {theme}";
-            }
+            txtCurrentTheme.Text = $"Current: {theme}";
         }
+
+        // 3. XỬ LÝ ĐỔI FILE MÀU (Quan trọng)
+        string uriPath = $"Theme/{theme}.xaml"; // Lưu ý: Kiểm tra folder là "Theme" hay "Themes" trong dự án của bạn
+        try 
+        {
+            var newTheme = new ResourceDictionary 
+            { 
+                Source = new Uri(uriPath, UriKind.Relative) 
+            };
+
+            // Xóa theme cũ và thêm theme mới
+            var appResources = Application.Current.Resources.MergedDictionaries;
+            appResources.Clear(); // Xóa sạch các dictionary cũ
+            
+            // Nạp lại file từ điển chính (nếu có dùng icon hay style chung)
+            appResources.Add(new ResourceDictionary { Source = new Uri("/Resources/Dictionary.xaml", UriKind.Relative) });
+            
+            // Nạp theme mới vào
+            appResources.Add(newTheme);
+
+            // 4. Lưu lại tên theme để lần sau mở app nó nhớ
+            Application.Current.Resources["CurrentTheme"] = theme;
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Lỗi không tìm thấy file màu: " + uriPath);
+        }
+    }
+}
 
         private void RadioButton_Checked(object sender, RoutedEventArgs e)
         {
@@ -74,10 +118,11 @@ namespace Do_An_LTTQ.View.UserPage
 
         private void Language_Changed(object sender, RoutedEventArgs e)
         {
-            if (sender is RadioButton rb && rb.Tag != null)
+            if (txtCurrentLanguage == null) return;
+            
+            if (sender is RadioButton rb)
             {
-                string language = rb.Content.ToString();
-                txtCurrentLanguage.Text = $"Current: {language}";
+                txtCurrentLanguage.Text = $"Current: {rb.Content}";
             }
         }
 
