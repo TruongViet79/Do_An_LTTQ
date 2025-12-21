@@ -35,7 +35,7 @@
             <Label Content="Confirm new password:"
                    FontSize="20"
                    Margin="5,0,5,0"></Label>
-            <PasswordBox x:Name="pwCFPassword"
+            <PasswordBox x:Name="txtPassword"
                          Height="30"
                          Padding="5"
                          Margin="5,0,5,5"

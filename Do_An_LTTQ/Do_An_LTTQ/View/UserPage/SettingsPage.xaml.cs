@@ -29,6 +29,9 @@ namespace Do_An_LTTQ.View.UserPage
 
         private void LoadCurrentSetting()
         {
+            txtUsername.Text = App.CurrentUsername;
+            txtEmail.Text = App.CurrentEmail;
+
             // 1. Lấy cỡ chữ đang dùng trong App ra (nếu chưa có thì mặc định là 14)
             double currentSize = 14;
             if (Application.Current.Resources.Contains("FontSizeNormal"))
@@ -128,9 +131,16 @@ namespace Do_An_LTTQ.View.UserPage
 
         private void SaveProfile(object sender, RoutedEventArgs e)
         {
+            string newUsername = txtUsername.Text.Trim();
+            string newEmail = txtEmail.Text.Trim();
+            string newPhone = txtPhone.Text.Trim();
             string username = txtUsername.Text;
             string email = txtEmail.Text;
             string phone = txtPhone.Text;
+
+            App.CurrentUsername = newUsername;
+            App.CurrentEmail = newEmail;
+
             MessageBox.Show($"Profile saved!\n\nUsername: {username}\nEmail: {email}\nPhone: {phone}",
                 "Success", MessageBoxButton.OK, MessageBoxImage.Information);
         }

@@ -27,7 +27,7 @@
             <Label Content="Password:"
                    FontSize="20"
                    Margin="5,0,5,0"></Label>
-            <PasswordBox x:Name="pwPassword"
+            <PasswordBox x:Name="txtPassword"
                          Height="30"
                          Padding="5"
                          Margin="5,0,5,10"

@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Do_An_LTTQ.View;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,6 +21,7 @@ namespace Do_An_LTTQ
     /// </summary>
     public partial class LoginWindow : Window
     {
+        DatabaseManager dbManager = new DatabaseManager();
         public LoginWindow()
         {
             InitializeComponent();
@@ -26,19 +29,28 @@ namespace Do_An_LTTQ
 
         private void SigninButton_Click(object sender, RoutedEventArgs e)
         {
-            string username = txtUsername.Text;
-            string password = pwPassword.Password;
+            string user = txtUsername.Text.Trim();
+            string pass = txtPassword.Password; // Đảm bảo txtPassword trùng với x:Name trong XAML 
 
-            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
+            if (dbManager.AuthenticateUser(user, pass))
             {
-                MessageBox.Show("Please enter your username and password.", "Missing Information", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
+                //Lưu username
+                App.CurrentUsername = user;
+
+                //Lấy email từ csdl
+                DataTable dt = dbManager.GetUserInfo(user);
+                if (dt.Rows.Count > 0)
+                {
+                    App.CurrentEmail = dt.Rows[0]["Email"].ToString();
+                }
+                MainWindow main = new MainWindow();
+                main.Show();
+                this.Close();
             }
-
-            Do_An_LTTQ.View.MainWindow main = new Do_An_LTTQ.View.MainWindow();
-            main.Show();
-
-            this.Close();
+            else
+            {
+                MessageBox.Show("Tên đăng nhập hoặc mật khẩu không đúng!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
         private void SignupButton_Click(object sender, RoutedEventArgs e)
         {
