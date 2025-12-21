@@ -52,3 +52,5 @@ DesignTime/
 
 # Các file do Visual Studio tạo ra trong quá trình gỡ lỗi
 vshost.*
+[Oo]bj/
+[Bb]in/
