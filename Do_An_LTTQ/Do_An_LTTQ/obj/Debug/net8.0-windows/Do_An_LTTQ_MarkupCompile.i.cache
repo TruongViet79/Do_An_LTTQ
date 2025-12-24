@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET8_0;NETCOREAPP;WINDOWS;WINDOWS7_0;NET5_0_OR_GREATER;NET6_0_OR_GREATER;NET7_0_OR_GREATER;NET8_0_OR_GREATER;NETCOREAPP3_0_OR_GREATER;NETCOREAPP3_1_OR_GREATER;WINDOWS7_0_OR_GREATER
 C:\Users\dfgd\OneDrive\Desktop\LTTQ\DoAnLTTQ\Do_An_LTTQ\Do_An_LTTQ\App.xaml
-81233160122
+81459636189
 
-121876992499
+12-2072859966
 199563416999
-LoginWindow.xaml;Resources\Dictionary.xaml;SignupWindow.xaml;View\MainWindow.xaml;View\UserPage\DashboardPage.xaml;View\UserPage\LibaryPage.xaml;View\UserPage\SettingsPage.xaml;View\UserPage\StorePage.xaml;
+LoginWindow.xaml;Resources\Dictionary.xaml;SignupWindow.xaml;View\MainWindow.xaml;View\UserPage\DashboardPage.xaml;View\UserPage\LibraryPage.xaml;View\UserPage\SettingsPage.xaml;View\UserPage\StorePage.xaml;
 
-False
+True
 

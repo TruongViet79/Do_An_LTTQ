@@ -32,5 +32,11 @@ namespace Do_An_LTTQ.View
             MainContent.Navigate(null);
             MainContent.Navigate(new UserPage.DashboardPage());
         }
+
+        private void btnLibrary_Click(object sender, RoutedEventArgs e)
+        {
+            MainContent.Navigate(null);
+            MainContent.Navigate(new UserPage.LibraryPage());
+        }
     }
 }
