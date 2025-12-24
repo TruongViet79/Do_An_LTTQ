@@ -69,15 +69,15 @@
 
 					<ScrollViewer Grid.Row="1" Grid.ColumnSpan="3" VerticalAlignment="Top"
                                   HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" Margin="0,0,10,0">
-						<ItemsControl x:Name="icFreeGames">
-							<ItemsControl.ItemsPanel>
+                        <ItemsControl x:Name="icFreeGames">
+                            <ItemsControl.ItemsPanel>
 								<ItemsPanelTemplate>
 									<StackPanel Orientation="Horizontal"/>
 								</ItemsPanelTemplate>
 							</ItemsControl.ItemsPanel>
 							<ItemsControl.ItemTemplate>
 								<DataTemplate>
-									<Button Style="{StaticResource GameCardButtonStyle}">
+                                    <Button Style="{StaticResource GameCardButtonStyle}" Click="Game_Click">
 										<StackPanel>
 											<Rectangle Style="{StaticResource GameImageRectangleStyle}">
 												<Rectangle.Fill>
@@ -106,7 +106,7 @@
 							</ItemsControl.ItemsPanel>
 							<ItemsControl.ItemTemplate>
 								<DataTemplate>
-									<Button Style="{StaticResource GameCardButtonStyle}">
+                                    <Button Style="{StaticResource GameCardButtonStyle}" Click="Game_Click">
 										<StackPanel>
 											<Rectangle Style="{StaticResource GameImageRectangleStyle}">
 												<Rectangle.Fill>

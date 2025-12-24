@@ -11,6 +11,9 @@
     <Compile Update="View\UserPage\DashboardPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="View\UserPage\GameDetailPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="View\UserPage\LibaryPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>

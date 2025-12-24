@@ -26,5 +26,24 @@ namespace Do_An_LTTQ.Services
                 .FromSqlRaw("EXEC sp_SearchGames @SearchTerm = {0}", searchTerm ?? (object)DBNull.Value)
                 .ToList();
         }
+
+        public Game GetGameDetails(int gameId)
+        {
+            using (var context = new GameStoreDbContext())
+            {
+                // Tìm game có ID khớp, nếu không thấy trả về null
+                return context.Games.FirstOrDefault(g => g.GameID == gameId);
+            }
+        }
+
+        public List<Game> GetGamesByCategory(int categoryId)
+        {
+            using (var context = new GameStoreDbContext())
+            {
+                return context.Games
+                    .FromSqlRaw("EXEC sp_GetGamesByCategory @CategoryID = {0}", categoryId)
+                    .ToList();
+            }
+        }
     }
 }

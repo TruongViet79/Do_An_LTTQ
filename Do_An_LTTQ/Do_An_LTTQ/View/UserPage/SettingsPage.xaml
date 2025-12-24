@@ -67,18 +67,24 @@
                                     <StackPanel>
                                         <CheckBox Content="Receive email notifications" 
                              IsChecked="True" Margin="5" FontSize="{DynamicResource FontSizeNormal}"/>
-                                        <CheckBox Content="Auto login" 
-                             IsChecked="False" Margin="5" FontSize="{DynamicResource FontSizeNormal}"/>
+                                        <CheckBox x:Name="chkAutoLogin" 
+                                                  Content="Auto login" 
+                                                  Margin="5" FontSize="{DynamicResource FontSizeNormal}"
+                                                  Click="chkAutoLogin_Click"/>
+                             
                                         <CheckBox Content="Show online status" 
                              IsChecked="True" Margin="5" FontSize="{DynamicResource FontSizeNormal}"/>
                                     </StackPanel>
                                 </GroupBox>
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
-                                    <Button Content="Save Changes" Width="160" Height="40" 
-                       Background="#4CAF50" Foreground="White" 
-                       FontWeight="Bold" Margin="10" Click="SaveProfile"/>
-                                    <Button Content="Reset" Width="100" Height="40" 
-                       Margin="5" Click="ResetProfile"/>
+                                    <Button Content="Save Changes" Width="140" Height="40" 
+                                            Background="#4CAF50" Foreground="White" FontWeight="Bold" Margin="5" Click="SaveProfile"/>
+
+                                    <Button Content="Reset" Width="80" Height="40" Margin="5" Click="ResetProfile"/>
+
+                                    <Button Content="Log Out" Width="100" Height="40" 
+                                            Background="#FF5252" Foreground="White" FontWeight="Bold" Margin="5" 
+                                            Click="Logout_Click"/>
                                 </StackPanel>
                             </StackPanel>
                         </ScrollViewer>

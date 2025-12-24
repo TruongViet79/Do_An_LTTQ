@@ -1,4 +1,5 @@
-﻿using Do_An_LTTQ.Services;
+﻿using Do_An_LTTQ.Models;
+using Do_An_LTTQ.Services;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -69,6 +70,28 @@ namespace Do_An_LTTQ.View.UserPage
                 {
                     MessageBox.Show("Lỗi hiển thị danh sách game: " + ex.Message); 
                 }   
+        }
+
+        private void Game_Click(object sender, RoutedEventArgs e)
+        {
+            Button btn = sender as Button;
+
+            // Vì ItemsSource của đại ca là DataView, nên Item là DataRowView
+            if (btn.DataContext is DataRowView row)
+            {
+                // Chuyển DataRow thành Object Game
+                Game selectedGame = new Game
+                {
+                    GameID = (int)row["GameID"],
+                    Title = row["Title"].ToString(),
+                    FinalPrice = row["FinalPrice"] != DBNull.Value ? Convert.ToDecimal(row["FinalPrice"]) : 0,
+                    MainCoverImageURL = row["MainCoverImageURL"].ToString(),
+
+                };
+
+                // Chuyển trang
+                NavigationService.Navigate(new GameDetailPage(selectedGame));
+            }
         }
     }
 }

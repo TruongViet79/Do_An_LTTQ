@@ -18,5 +18,10 @@ namespace Do_An_LTTQ.Models
         public string MainCoverImageURL { get; set; }
         public DateTime? ReleaseDate { get; set; }
         public string AgeRating { get; set; }
+
+        public string SystemRequirements { get; set; } 
+        public string SupportedLanguages { get; set; } 
+        public string DeveloperName { get; set; }      
+        public string PublisherName { get; set; }      
     }
 }

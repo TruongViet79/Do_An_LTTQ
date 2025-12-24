@@ -53,6 +53,12 @@ namespace Do_An_LTTQ
             }
         }
 
+        private void BackButton_Click(object sender, RoutedEventArgs e)
+        {
+            LoginWindow loginWindow = new LoginWindow();
+            loginWindow.Show();
+            this.Close();
+        }
         private void btnRegister_Click(object sender, RoutedEventArgs e)
         {
         }

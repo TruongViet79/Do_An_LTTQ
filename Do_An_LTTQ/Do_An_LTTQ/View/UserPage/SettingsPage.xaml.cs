@@ -55,7 +55,11 @@ namespace Do_An_LTTQ.View.UserPage
                 txtCurrentLanguage.Text = $"Current: {lgEL.Content}";
             ;
 
-            //Theme
+            //Auto login
+            if (chkAutoLogin != null)
+            {
+                chkAutoLogin.IsChecked = Do_An_LTTQ.Properties.Settings.Default.IsLoggedIn;
+            }
 
 
         }
@@ -156,6 +160,44 @@ namespace Do_An_LTTQ.View.UserPage
                 txtPhone.Text = "0123456789";
                 MessageBox.Show("Profile reset!", "Success");
             }
+        }
+        private void Logout_Click(object sender, RoutedEventArgs e)
+        {
+            // 1. Xóa thông tin lưu tạm trong App
+            App.CurrentUsername = null;
+            App.CurrentEmail = null;
+
+            // 2. Xóa trạng thái "Duy trì đăng nhập" (Xem phần 3 bên dưới để hiểu dòng này)
+            Do_An_LTTQ.Properties.Settings.Default.IsLoggedIn = false;
+            Do_An_LTTQ.Properties.Settings.Default.Save();
+
+            // 3. Mở lại màn hình Login
+            // Lưu ý: Đảm bảo bạn đã có class LoginWindow trong namespace Do_An_LTTQ.Login
+            LoginWindow loginWindow = new LoginWindow();
+            loginWindow.Show();
+
+            // 4. Đóng cửa sổ hiện tại (MainWindow)
+            Window.GetWindow(this).Close();
+        }
+
+        private void chkAutoLogin_Click(object sender, RoutedEventArgs e)
+        {
+            if (chkAutoLogin.IsChecked == true)
+            {
+                // Nếu tích vào -> Bật tính năng tự động đăng nhập
+                Do_An_LTTQ.Properties.Settings.Default.IsLoggedIn = true;
+                // Cập nhật lại tên người dùng hiện tại vào cài đặt để lần sau biết ai mà login
+                Do_An_LTTQ.Properties.Settings.Default.SavedUsername = App.CurrentUsername;
+            }
+            else
+            {
+                // Nếu bỏ tích -> Tắt tính năng (Lần sau mở app sẽ hỏi mật khẩu)
+                Do_An_LTTQ.Properties.Settings.Default.IsLoggedIn = false;
+                Do_An_LTTQ.Properties.Settings.Default.SavedUsername = "";
+            }
+
+            // Quan trọng: Lưu lại xuống ổ cứng
+            Do_An_LTTQ.Properties.Settings.Default.Save();
         }
     }
 }
