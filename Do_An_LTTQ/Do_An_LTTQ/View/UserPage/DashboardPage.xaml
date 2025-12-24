@@ -199,7 +199,7 @@
                         HorizontalAlignment="Right"
                         MouseEnter="FriendList_MouseEnter"
                         MouseLeave="FriendList_MouseLeave">
-                        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Background="Transparent">
+                        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Background="Transparent" HorizontalAlignment="Right">
                             <StackPanel Orientation="Vertical" Height="800" HorizontalAlignment="Left">
                                 <Border Style="{StaticResource FriendItemStyle}">
                                     <StackPanel Orientation="Horizontal">

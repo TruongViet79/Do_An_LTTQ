@@ -11,14 +11,14 @@
     <Grid Background="White">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"></ColumnDefinition>
-            <ColumnDefinition Width="7*"></ColumnDefinition>
+            <ColumnDefinition Width="11*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>
             <RowDefinition Height="6*"></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" Text="G a M e m o r y" Background="White" TextAlignment="Center" VerticalAlignment="Center" FontSize="30"
+        <TextBlock Grid.Row="0" Text="G a M e m o r y" Background="White" TextAlignment="Center" VerticalAlignment="Center" FontSize="20"
                        FontWeight="Bold" FontFamily="Comic Sans MS"/>
         <StackPanel Grid.Row="1" Grid.RowSpan="2" Background="White">
             <Button Style="{StaticResource IconTextButtonStyle}" Margin="10" x:Name="btnDashboard"
@@ -43,27 +43,13 @@
                 </StackPanel>
             </Button>
 
-            <Button Style="{StaticResource IconTextButtonStyle}" Margin="10" x:Name="btnLibrary">
+            <Button Style="{StaticResource IconTextButtonStyle}" Margin="10" x:Name="btnLibrary"
+                    Click="btnLibrary_Click">
                 <StackPanel Orientation="Horizontal" Width="158">
                     <fa:ImageAwesome Icon="ShoppingBag" Width="30" Height="30" Margin="5"/>
                     <TextBlock Text="Library" FontSize="20" Margin="10"/>
                 </StackPanel>
             </Button>
-            <Border Height="276" Margin="20" Background="Lavender" CornerRadius="20" BorderThickness="2" BorderBrush="Lavender">
-                <StackPanel Height="283" VerticalAlignment="Top">
-                    <Rectangle Height="120" Margin="20">
-                        <Rectangle.Fill>
-                            <ImageBrush ImageSource="/Resources/idle2.png" Stretch="UniformToFill"/>
-                        </Rectangle.Fill>
-                    </Rectangle>
-                    <TextBlock Text="Last game played:" TextAlignment="Center" FontSize="20" FontWeight="Bold" Margin="5" FontFamily="Comic Sans MS"></TextBlock>
-                    <Button x:Name="btnPAgain" Style="{StaticResource IconTextButtonStyle}" Margin="5">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Play again?" FontSize="20" Margin="10" FontFamily="Comic Sans MS" FontWeight="Bold" Width="150" TextAlignment="Center" Height="45" RenderTransformOrigin="0.519,1.223"/>
-                        </StackPanel>
-                    </Button>
-                </StackPanel>
-            </Border>
         </StackPanel>
         <Frame x:Name="MainContent" Grid.Column="1" Grid.Row="0" Grid.RowSpan="3"
                NavigationUIVisibility="Hidden"/>
