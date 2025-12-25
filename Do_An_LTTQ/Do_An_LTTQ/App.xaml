@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:Do_An_LTTQ"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
-             StartupUri="Login/LoginWindow.xaml">
+             Startup="Application_Startup">
 
 
     <Application.Resources>
@@ -11,11 +11,21 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Resources/Dictionary.xaml"/>
+
+                <ResourceDictionary Source="/Theme/Purple.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+
+            <Style TargetType="TextBlock">
+                <Setter Property="Foreground" Value="{DynamicResource PrimaryText}"/>
+                <Setter Property="FontFamily" Value="Comic Sans MS"/>
+            </Style>
+            
             <sys:Double x:Key="FontSizeSmall">12</sys:Double>
             <sys:Double x:Key="FontSizeNormal">15</sys:Double>
             <sys:Double x:Key="FontSizeLarge">20</sys:Double>
             <sys:Double x:Key="FontSizeHuge">25</sys:Double>
+            
+            
         </ResourceDictionary>
 
     </Application.Resources>

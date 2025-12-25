@@ -13,12 +13,12 @@
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <Border  Margin="20" Grid.ColumnSpan="2" CornerRadius="20" BorderThickness="0" BorderBrush="Black" Background="#E8D9F0">
-            <Border Margin="20" Background="White" CornerRadius="20">
-                <TabControl TabStripPlacement="Left" BorderThickness="0">
-                    <TabItem Header="👤 Profile" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center"
-         Style="{StaticResource TabControlKey}">
-                        <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Border  Margin="20" Grid.ColumnSpan="2" CornerRadius="20" BorderThickness="0" BorderBrush="Black" Background="{DynamicResource AppBackground}">
+            <Border Margin="20" Background="{DynamicResource CardBackground}" CornerRadius="20">
+                <TabControl TabStripPlacement="Left" BorderThickness="0" Background="{DynamicResource CardBackground}">
+                    <TabItem Header="👤 Profile" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center " 
+         Style="{StaticResource TabControlKey}" Background="{DynamicResource AccentColor}">
+                        <ScrollViewer VerticalScrollBarVisibility="Auto" Background="{DynamicResource CardBackground}">
                             <StackPanel Margin="20">
                                 <TextBlock Text="User Profile" FontSize="{DynamicResource FontSizeHuge}" FontWeight="Bold" 
                       FontFamily="Comic Sans MS" Margin="10"/>
@@ -67,24 +67,30 @@
                                     <StackPanel>
                                         <CheckBox Content="Receive email notifications" 
                              IsChecked="True" Margin="5" FontSize="{DynamicResource FontSizeNormal}"/>
-                                        <CheckBox Content="Auto login" 
-                             IsChecked="False" Margin="5" FontSize="{DynamicResource FontSizeNormal}"/>
+                                        <CheckBox x:Name="chkAutoLogin" 
+                                                  Content="Auto login" 
+                                                  Margin="5" FontSize="{DynamicResource FontSizeNormal}"
+                                                  Click="chkAutoLogin_Click"/>
+                             
                                         <CheckBox Content="Show online status" 
                              IsChecked="True" Margin="5" FontSize="{DynamicResource FontSizeNormal}"/>
                                     </StackPanel>
                                 </GroupBox>
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
-                                    <Button Content="Save Changes" Width="160" Height="40" 
-                       Background="#4CAF50" Foreground="White" 
-                       FontWeight="Bold" Margin="10" Click="SaveProfile"/>
-                                    <Button Content="Reset" Width="100" Height="40" 
-                       Margin="5" Click="ResetProfile"/>
+                                    <Button Content="Save Changes" Width="140" Height="40" 
+                                            Background="#4CAF50" Foreground="White" FontWeight="Bold" Margin="5" Click="SaveProfile"/>
+
+                                    <Button Content="Reset" Width="80" Height="40" Margin="5" Click="ResetProfile"/>
+
+                                    <Button Content="Log Out" Width="100" Height="40" 
+                                            Background="#FF5252" Foreground="White" FontWeight="Bold" Margin="5" 
+                                            Click="Logout_Click"/>
                                 </StackPanel>
                             </StackPanel>
                         </ScrollViewer>
                     </TabItem>
                     <TabItem Header="🎨 Theme" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center"
-                             Style="{StaticResource TabControlKey}">
+                             Style="{StaticResource TabControlKey}" Background="{DynamicResource AccentColor}">
                         <Grid Margin="20">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"/>
@@ -147,12 +153,12 @@
                             </Grid>
 
                             <TextBlock Grid.Row="2" x:Name="txtCurrentTheme" Text="Current: Light" 
-                                       FontSize="16" Foreground="Green" Margin="10" 
+                                       FontSize="16" Foreground="{DynamicResource PrimaryText}" Margin="10" 
                                        HorizontalAlignment="Center"/>
                         </Grid>
                     </TabItem>
-                    <TabItem Header="📏 Size" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center"
-                             Style="{StaticResource TabControlKey}">
+                    <TabItem Header="📏 Font Size" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center"
+                             Style="{StaticResource TabControlKey}" Background="{DynamicResource AccentColor}">
                         <StackPanel Margin="20">
                             <TextBlock Text="Font Size" FontSize="{DynamicResource FontSizeHuge}" FontWeight="Bold" 
                                       FontFamily="Comic Sans MS" Margin="0,0,0,20"/>
@@ -178,26 +184,20 @@
                     </TabItem>
 
                     <TabItem Header="🌐 Language" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center"
-                             Style="{StaticResource TabControlKey}">
+                             Style="{StaticResource TabControlKey}" Background="{DynamicResource AccentColor}">
                         <StackPanel Margin="20">
                             <TextBlock Text="Select Language" FontSize="{DynamicResource FontSizeHuge}" FontWeight="Bold" 
                                       FontFamily="Comic Sans MS" Margin="10"/>
 
                             <GroupBox Header="Language Options" Padding="15">
                                 <StackPanel>
-                                    <RadioButton Content="🇻🇳 Tiếng Việt" GroupName="Language" 
-                                               Margin="10" FontSize="{DynamicResource FontSizeNormal}" IsChecked="True" 
+                                    <RadioButton x:Name="lgVN" Content="🇻🇳 Tiếng Việt" GroupName="Language" 
+                                               Margin="10" FontSize="{DynamicResource FontSizeNormal}" 
                                                Checked="Language_Changed" Tag="vi"/>
-                                    <RadioButton Content="🇬🇧 English" GroupName="Language" 
-                                               Margin="10" FontSize="{DynamicResource FontSizeNormal}" Checked="Language_Changed" Tag="en"/>
-                                    <RadioButton Content="🇯🇵 日本語 (Japanese)" GroupName="Language" 
-                                               Margin="10" FontSize="{DynamicResource FontSizeNormal}" Checked="Language_Changed" Tag="ja"/>
-                                    <RadioButton Content="🇰🇷 한국어 (Korean)" GroupName="Language" 
-                                               Margin="10" FontSize="{DynamicResource FontSizeNormal}" Checked="Language_Changed" Tag="ko"/>
-                                    <RadioButton Content="🇨🇳 中文 (Chinese)" GroupName="Language" 
-                                               Margin="10" FontSize="{DynamicResource FontSizeNormal}" Checked="Language_Changed" Tag="zh"/>
-                                    <RadioButton Content="🇫🇷 Français (French)" GroupName="Language" 
-                                               Margin="10" FontSize="{DynamicResource FontSizeNormal}" Checked="Language_Changed" Tag="fr"/>
+                                    <RadioButton x:Name="lgEL" Content="🇬🇧 English" GroupName="Language" 
+                                               Margin="10" FontSize="{DynamicResource FontSizeNormal}" 
+                                               IsChecked="True"  Checked="Language_Changed" Tag="en"/>
+                                    
                                 </StackPanel>
                             </GroupBox>
 

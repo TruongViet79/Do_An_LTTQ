@@ -12,7 +12,11 @@
       }
     ],
     "additionalProbingPaths": [
+<<<<<<< HEAD
       "C:\\Users\\TriVien\\.dotnet\\store\\|arch|\\|tfm|",
+=======
+      "C:\\Users\\ASUS\\.dotnet\\store\\|arch|\\|tfm|",
+>>>>>>> origin/nhanh_do_an_cua_vit
       "C:\\Users\\ASUS\\.nuget\\packages",
       "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
     ],
