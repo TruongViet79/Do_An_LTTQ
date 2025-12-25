@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,8 +21,11 @@ namespace Do_An_LTTQ.Models
         public string AgeRating { get; set; }
 
         public string SystemRequirements { get; set; } 
-        public string SupportedLanguages { get; set; } 
-        public string DeveloperName { get; set; }      
-        public string PublisherName { get; set; }      
+        public string SupportedLanguages { get; set; }
+        [NotMapped]
+        public string DeveloperName { get; set; }
+
+        [NotMapped]
+        public string PublisherName { get; set; }
     }
 }
