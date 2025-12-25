@@ -11,7 +11,7 @@
             <TextBlock Text="Sign up" 
            FontSize="28" 
            FontWeight="Bold" 
-           Margin="0,5,0,15" 
+           Margin="0,5,0,10" 
            HorizontalAlignment="Center"/>
             <Label Content="User name" 
        FontSize="20" 
@@ -19,7 +19,7 @@
             <TextBox x:Name="txtUsername" 
          Height="30" 
          Padding="5" 
-         Margin="5,0,5,10" 
+         Margin="5,0,5,5" 
          Background="#FF0063EC"
          Foreground="White"></TextBox>
             <Label Content="New password:"
@@ -28,30 +28,51 @@
             <PasswordBox x:Name="pwPassword"
              Height="30"
              Padding="5"
-             Margin="5,0,5,10"
+             Margin="5,0,5,5"
              Background="#FF3A6587"
              Foreground="White"
              BorderThickness="0"></PasswordBox>
             <Label Content="Confirm new password:"
                    FontSize="20"
                    Margin="5,0,5,0"></Label>
-            <PasswordBox x:Name="pwCFPassword"
+            <PasswordBox x:Name="txtPassword"
                          Height="30"
                          Padding="5"
-                         Margin="5,0,5,10"
+                         Margin="5,0,5,5"
                          Background="#2a475e"
                          Foreground="White"
                          BorderThickness="0"></PasswordBox>
-            <Button Content="OK"
-                    Width="100"
-                    Height="30"
-                    Margin="0,15,0,0"
-                    Background="#FF2D588C"
-                    Foreground="White"
-                    BorderThickness="0"
-                    Cursor="Hand"
-                    Click="OkButton_Click">
-            </Button>
+            <Label Content="Email"
+                    FontSize="20"
+                    Margin="5,0,5,0"></Label>
+            <TextBox x:Name="txtEmail" 
+                    Height="30" 
+                    Padding="5" 
+                    Margin="5,0,5,5" 
+                    Background="#FF0F4187"
+                    Foreground="White"></TextBox>
+            <Grid Margin="5,15,0,5">
+                <Button Content="OK"
+            HorizontalAlignment="Right"
+            Width="100"
+            Height="20"
+            Background="#FF2D588C"
+            Foreground="White"
+            BorderThickness="0"
+            Cursor="Hand"
+            Click="OkButton_Click"
+            IsDefault="True"></Button>
+                <Button Content="Back"
+            HorizontalAlignment="Left"
+            Width="100"
+            Height="20"
+            Background="#FFB0B8D2"
+            Foreground="#FF0A2A7E"
+            BorderThickness="0"
+            Cursor="Hand"
+            Click="BackButton_Click">
+                </Button>
+            </Grid>
         </StackPanel>
     </Grid>
 </Window>

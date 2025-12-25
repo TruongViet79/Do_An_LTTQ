@@ -8,49 +8,86 @@
         Title="MainWindow" Height="720" Width="1280"
         xmlns:fa="http://schemas.fontawesome.io/icons/"
         ResizeMode="NoResize">
-    <Grid Background="White">
+    <Grid Background="{DynamicResource AppBackground}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"></ColumnDefinition>
-            <ColumnDefinition Width="11*"></ColumnDefinition>
+            <ColumnDefinition Width="7*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>
             <RowDefinition Height="6*"></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" Text="G a M e m o r y" Background="White" TextAlignment="Center" VerticalAlignment="Center" FontSize="20"
-                       FontWeight="Bold" FontFamily="Comic Sans MS"/>
-        <StackPanel Grid.Row="1" Grid.RowSpan="2" Background="White">
+
+        <TextBlock Grid.Row="0" Text="G a M e m o r y" Background="Transparent" 
+                   Foreground="{DynamicResource HeaderText}" TextAlignment="Center" 
+                   VerticalAlignment="Center" FontSize="30"
+                   FontWeight="Bold" FontFamily="Comic Sans MS"/>
+
+
+        <StackPanel Grid.Row="1" Grid.RowSpan="2" Background="Transparent">
             <Button Style="{StaticResource IconTextButtonStyle}" Margin="10" x:Name="btnDashboard"
-                    Click="btnDashboard_Click">
+                    Click="btnDashboard_Click" Background="{DynamicResource AccentColor}" BorderThickness="0" >
                 <StackPanel Orientation="Horizontal">
-                    <fa:ImageAwesome Icon="Home" Width="30" Height="30" Margin="5"/>
-                    <TextBlock Text="Dashboard" FontSize="20" Margin="10"/>
+                    <fa:ImageAwesome Icon="Home" Width="30" Height="30" Margin="5"
+                                     Foreground="{DynamicResource PrimaryText}"/>
+                    <TextBlock Text="Dashboard" FontSize="{DynamicResource FontSizeLarge}" Margin="10"
+                               Foreground="{DynamicResource PrimaryText}"/>
                 </StackPanel>
             </Button>
-            <Button Style="{StaticResource IconTextButtonStyle}" Margin="10" x:Name="btnStore">
+
+            <Button Style="{StaticResource IconTextButtonStyle}" Margin="10" x:Name="btnStore"
+                    Background="{DynamicResource AccentColor}" BorderThickness="0">
                 <StackPanel Orientation="Horizontal" Width="158">
-                    <fa:ImageAwesome Icon="ShoppingCart" Width="30" Height="30" Margin="5"/>
-                    <TextBlock Text="Store" FontSize="20" Margin="10"/>
+                    <fa:ImageAwesome Icon="ShoppingCart" Width="30" Height="30" Margin="5"
+                                     Foreground="{DynamicResource PrimaryText}"/>
+                    <TextBlock Text="Store" FontSize="{DynamicResource FontSizeLarge}" Margin="10"
+                               Foreground="{DynamicResource PrimaryText}"/>
                 </StackPanel>
             </Button>
 
             <Button Style="{StaticResource IconTextButtonStyle}" Margin="10" x:Name="btnSettings"
-                    Click="btnSettings_Click">
+                    Click="btnSettings_Click" Background="{DynamicResource AccentColor}" BorderThickness="0">
                 <StackPanel Orientation="Horizontal" Width="158">
-                    <fa:ImageAwesome Icon="Gear" Width="30" Height="30" Margin="5"/>
-                    <TextBlock Text="Settings" FontSize="20" Margin="10"/>
+                    <fa:ImageAwesome Icon="Gear" Width="30" Height="30" Margin="5"
+                                     Foreground="{DynamicResource PrimaryText}"/>
+                    <TextBlock Text="Settings" FontSize="{DynamicResource FontSizeLarge}" Margin="10"
+                               Foreground="{DynamicResource PrimaryText}"/>
                 </StackPanel>
             </Button>
 
             <Button Style="{StaticResource IconTextButtonStyle}" Margin="10" x:Name="btnLibrary"
+
+                    Background="{DynamicResource AccentColor}" BorderThickness="0"
                     Click="btnLibrary_Click">
+
                 <StackPanel Orientation="Horizontal" Width="158">
-                    <fa:ImageAwesome Icon="ShoppingBag" Width="30" Height="30" Margin="5"/>
-                    <TextBlock Text="Library" FontSize="20" Margin="10"/>
+                    <fa:ImageAwesome Icon="ShoppingBag" Width="30" Height="30" Margin="5"
+                                     Foreground="{DynamicResource PrimaryText}"/>
+                    <TextBlock Text="Library" FontSize="{DynamicResource FontSizeLarge}" Margin="10"
+                               Foreground="{DynamicResource PrimaryText}"/>
                 </StackPanel>
             </Button>
+
+            <Border Height="276" Margin="20"  CornerRadius="20" BorderThickness="2" BorderBrush="Lavender"
+                    Background="Transparent" >
+                <StackPanel Height="283" VerticalAlignment="Top">
+                    <Rectangle Height="120" Margin="20">
+                        <Rectangle.Fill>
+                            <ImageBrush ImageSource="/Resources/idle2.png" Stretch="UniformToFill"/>
+                        </Rectangle.Fill>
+                    </Rectangle>
+                    <TextBlock Text="Last game played:" TextAlignment="Center" FontSize="20" FontWeight="Bold" Margin="5" FontFamily="Comic Sans MS" Foreground="{DynamicResource PrimaryText}"></TextBlock>
+                    <Button x:Name="btnPAgain" Style="{StaticResource IconTextButtonStyle}" Margin="5"
+                            Background="{DynamicResource AccentColor}">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Play again?" FontSize="{DynamicResource FontSizeLarge}" Foreground="{DynamicResource PrimaryText}" Margin="10" FontFamily="Comic Sans MS" FontWeight="Bold" Width="150" TextAlignment="Center" Height="45"/>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+            </Border>
         </StackPanel>
+
         <Frame x:Name="MainContent" Grid.Column="1" Grid.Row="0" Grid.RowSpan="3"
                NavigationUIVisibility="Hidden"/>
     </Grid>

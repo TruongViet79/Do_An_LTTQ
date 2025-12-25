@@ -9,13 +9,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Resources\idle.png" />
-    <None Remove="Resources\idle2.png" />
+    <Folder Include="ChooseOption\" />
+    <Folder Include="View\UserControlPage\" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="FontAwesome" Version="4.7.0" />
-    <PackageReference Include="FontAwesome.WPF" Version="4.7.0.9" />
+    <None Remove="Resources\idle.png" />
+    <None Remove="Resources\idle2.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -28,11 +28,33 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ChooseOption\" />
+    <PackageReference Include="FontAwesome" Version="4.7.0" />
+    <PackageReference Include="FontAwesome.WPF" Version="4.7.0.9" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.11" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.11">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="System.Data.SqlClient" Version="4.9.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <Page Update="View\UserPage\LibraryPage.xaml">
+    <Compile Update="Properties\Settings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="View\UserPage\LibaryPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>

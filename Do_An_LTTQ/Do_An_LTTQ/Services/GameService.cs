@@ -1,0 +1,49 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Do_An_LTTQ.Helpers;
+using Do_An_LTTQ.Models;
+using Microsoft.EntityFrameworkCore;
+
+namespace Do_An_LTTQ.Services
+{
+    public class GameService
+    {
+        private readonly GameStoreDbContext _context = new GameStoreDbContext();
+
+        public List<Game> GetAllGames()
+        {
+            using (var context = new GameStoreDbContext())
+            {
+                // Lấy toàn bộ danh sách game từ bảng GAMES
+                return context.Games.ToList();
+            }
+        }
+
+        public List<Game> SearchGames(string searchTerm)
+        {
+            return _context.Games
+                .FromSqlRaw("EXEC sp_SearchGames @SearchTerm = {0}", searchTerm ?? (object)DBNull.Value)
+                .ToList();
+        }
+
+        public Game GetGameDetails(int gameId)
+        {
+            using (var context = new GameStoreDbContext())
+            {
+                // Tìm game có ID khớp, nếu không thấy trả về null
+                return context.Games.FirstOrDefault(g => g.GameID == gameId);
+            }
+        }
+
+        public List<Game> GetGamesByCategory(int categoryId)
+        {
+            using (var context = new GameStoreDbContext())
+            {
+                return context.Games
+                    .FromSqlRaw("EXEC sp_GetGamesByCategory @CategoryID = {0}", categoryId)
+                    .ToList();
+            }
+        }
+    }
+}

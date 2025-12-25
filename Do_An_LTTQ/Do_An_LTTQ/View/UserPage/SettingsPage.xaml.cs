@@ -23,40 +23,128 @@ namespace Do_An_LTTQ.View.UserPage
         public SettingsPage()
         {
             InitializeComponent();
+
+            LoadCurrentSetting();
         }
 
-        private void ChangeTheme(object sender, RoutedEventArgs e)
+        private void LoadCurrentSetting()
         {
-            if (sender is Button btn && btn.Tag != null)
+            txtUsername.Text = App.CurrentUsername;
+            txtEmail.Text = App.CurrentEmail;
+
+            // 1. Lấy cỡ chữ đang dùng trong App ra (nếu chưa có thì mặc định là 14)
+            double currentSize = 14;
+            if (Application.Current.Resources.Contains("FontSizeNormal"))
             {
-                string theme = btn.Tag.ToString(); // Lấy "Light", "Dark", "Purple", "Blue"
-                txtCurrentTheme.Text = $"Current: {theme}";
+                currentSize = (double)Application.Current.Resources["FontSizeNormal"];
             }
+
+            // 2. Tick lại vào đúng cái nút tương ứng
+            // Lưu ý: Phải ngắt sự kiện Checked tạm thời nếu không muốn nó chạy logic update dư thừa (tuỳ chọn)
+            switch (currentSize)
+            {
+                case 12: rbSmall.IsChecked = true; break;
+                case 14: rbMedium.IsChecked = true; break;
+                case 16: rbLarge.IsChecked = true; break;
+            }
+
+            //Language
+            if (lgVN.IsChecked == true)
+                txtCurrentLanguage.Text = $"Current: {lgVN.Content}";
+            else if (lgEL.IsChecked == true)
+                txtCurrentLanguage.Text = $"Current: {lgEL.Content}";
+            ;
+
+            //Auto login
+            if (chkAutoLogin != null)
+            {
+                chkAutoLogin.IsChecked = Do_An_LTTQ.Properties.Settings.Default.IsLoggedIn;
+            }
+
+
         }
+        private void ChangeTheme(object sender, RoutedEventArgs e)
+{
+    if (sender is Button btn && btn.Tag != null)
+    {
+        // 1. Lấy tên theme từ Tag của nút (VD: "Blue", "Light")
+        string theme = btn.Tag.ToString(); 
+
+        // 2. Cập nhật dòng chữ hiển thị "Current: ..."
+        if (txtCurrentTheme != null)
+        {
+            txtCurrentTheme.Text = $"Current: {theme}";
+        }
+
+        // 3. XỬ LÝ ĐỔI FILE MÀU (Quan trọng)
+        string uriPath = $"Theme/{theme}.xaml"; // Lưu ý: Kiểm tra folder là "Theme" hay "Themes" trong dự án của bạn
+        try 
+        {
+            var newTheme = new ResourceDictionary 
+            { 
+                Source = new Uri(uriPath, UriKind.Relative) 
+            };
+
+            // Xóa theme cũ và thêm theme mới
+            var appResources = Application.Current.Resources.MergedDictionaries;
+            appResources.Clear(); // Xóa sạch các dictionary cũ
+            
+            // Nạp lại file từ điển chính (nếu có dùng icon hay style chung)
+            appResources.Add(new ResourceDictionary { Source = new Uri("/Resources/Dictionary.xaml", UriKind.Relative) });
+            
+            // Nạp theme mới vào
+            appResources.Add(newTheme);
+
+            // 4. Lưu lại tên theme để lần sau mở app nó nhớ
+            Application.Current.Resources["CurrentTheme"] = theme;
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Lỗi không tìm thấy file màu: " + uriPath);
+        }
+    }
+}
 
         private void RadioButton_Checked(object sender, RoutedEventArgs e)
         {
             if (sender is RadioButton rb  && rb.Tag != null)
             {
-                int size = int.Parse(rb.Tag.ToString());
-                txtPreview.FontSize = size;
+                double baseSize = double .Parse(rb.Tag.ToString());
+                if (txtPreview != null)
+                {
+                    txtPreview.FontSize = baseSize;
+                }
+
+                Application.Current.Resources["FontSizeNormal"] =baseSize;
+
+                Application.Current.Resources["FontSizeLarge"] = baseSize * 1.5;
+
+                Application.Current.Resources["FontSizeHuge"] = baseSize * 2.0;
             }
         }
 
         private void Language_Changed(object sender, RoutedEventArgs e)
         {
-            if (sender is RadioButton rb && rb.Tag != null)
+            if (txtCurrentLanguage == null) return;
+            
+            if (sender is RadioButton rb)
             {
-                string language = rb.Content.ToString();
-                txtCurrentLanguage.Text = $"Current: {language}";
+                txtCurrentLanguage.Text = $"Current: {rb.Content}";
             }
         }
 
         private void SaveProfile(object sender, RoutedEventArgs e)
         {
+            string newUsername = txtUsername.Text.Trim();
+            string newEmail = txtEmail.Text.Trim();
+            string newPhone = txtPhone.Text.Trim();
             string username = txtUsername.Text;
             string email = txtEmail.Text;
             string phone = txtPhone.Text;
+
+            App.CurrentUsername = newUsername;
+            App.CurrentEmail = newEmail;
+
             MessageBox.Show($"Profile saved!\n\nUsername: {username}\nEmail: {email}\nPhone: {phone}",
                 "Success", MessageBoxButton.OK, MessageBoxImage.Information);
         }
@@ -72,6 +160,44 @@ namespace Do_An_LTTQ.View.UserPage
                 txtPhone.Text = "0123456789";
                 MessageBox.Show("Profile reset!", "Success");
             }
+        }
+        private void Logout_Click(object sender, RoutedEventArgs e)
+        {
+            // 1. Xóa thông tin lưu tạm trong App
+            App.CurrentUsername = null;
+            App.CurrentEmail = null;
+
+            // 2. Xóa trạng thái "Duy trì đăng nhập" (Xem phần 3 bên dưới để hiểu dòng này)
+            Do_An_LTTQ.Properties.Settings.Default.IsLoggedIn = false;
+            Do_An_LTTQ.Properties.Settings.Default.Save();
+
+            // 3. Mở lại màn hình Login
+            // Lưu ý: Đảm bảo bạn đã có class LoginWindow trong namespace Do_An_LTTQ.Login
+            LoginWindow loginWindow = new LoginWindow();
+            loginWindow.Show();
+
+            // 4. Đóng cửa sổ hiện tại (MainWindow)
+            Window.GetWindow(this).Close();
+        }
+
+        private void chkAutoLogin_Click(object sender, RoutedEventArgs e)
+        {
+            if (chkAutoLogin.IsChecked == true)
+            {
+                // Nếu tích vào -> Bật tính năng tự động đăng nhập
+                Do_An_LTTQ.Properties.Settings.Default.IsLoggedIn = true;
+                // Cập nhật lại tên người dùng hiện tại vào cài đặt để lần sau biết ai mà login
+                Do_An_LTTQ.Properties.Settings.Default.SavedUsername = App.CurrentUsername;
+            }
+            else
+            {
+                // Nếu bỏ tích -> Tắt tính năng (Lần sau mở app sẽ hỏi mật khẩu)
+                Do_An_LTTQ.Properties.Settings.Default.IsLoggedIn = false;
+                Do_An_LTTQ.Properties.Settings.Default.SavedUsername = "";
+            }
+
+            // Quan trọng: Lưu lại xuống ổ cứng
+            Do_An_LTTQ.Properties.Settings.Default.Save();
         }
     }
 }
