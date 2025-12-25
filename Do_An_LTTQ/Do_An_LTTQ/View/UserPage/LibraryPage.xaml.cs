@@ -18,10 +18,11 @@ namespace Do_An_LTTQ.View.UserPage
     /// <summary>
     /// Interaction logic for LibaryPage.xaml
     /// </summary>
-    public partial class LibaryPage : Page
+    public partial class LibraryPage : Page
     {
-        public LibaryPage()
+        public LibraryPage()
         {
+            InitializeComponent();
         }
     }
 }
