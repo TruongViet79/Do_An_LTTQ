@@ -71,7 +71,7 @@
                                                   Content="Auto login" 
                                                   Margin="5" FontSize="{DynamicResource FontSizeNormal}"
                                                   Click="chkAutoLogin_Click"/>
-                             
+
                                         <CheckBox Content="Show online status" 
                              IsChecked="True" Margin="5" FontSize="{DynamicResource FontSizeNormal}"/>
                                     </StackPanel>
@@ -171,7 +171,7 @@
                                                Margin="10" FontSize="{DynamicResource FontSizeNormal}" Tag="14" Checked="RadioButton_Checked"/>
                                     <RadioButton x:Name="rbLarge" Content="Large (16px)" GroupName="FontSize" 
                                                Margin="10" FontSize="{DynamicResource FontSizeNormal}" Tag="16" Checked="RadioButton_Checked"/>
-                                    
+
                                 </StackPanel>
                             </GroupBox>
 
@@ -197,7 +197,7 @@
                                     <RadioButton x:Name="lgEL" Content="🇬🇧 English" GroupName="Language" 
                                                Margin="10" FontSize="{DynamicResource FontSizeNormal}" 
                                                IsChecked="True"  Checked="Language_Changed" Tag="en"/>
-                                    
+
                                 </StackPanel>
                             </GroupBox>
 

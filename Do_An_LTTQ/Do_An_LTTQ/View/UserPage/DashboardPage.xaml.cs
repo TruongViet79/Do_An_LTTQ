@@ -54,22 +54,22 @@ namespace Do_An_LTTQ.View.UserPage
             try
             {
                 // 1. Lấy toàn bộ game từ DatabaseManager
-                DataTable dtGames = _dbManager.GetDashboardGames(); 
+                DataTable dtGames = _dbManager.GetDashboardGames();
 
                 // 2. Lọc danh sách Game Miễn Phí (Giá = 0)
-                DataView freeView = new DataView(dtGames); 
-                freeView.RowFilter = "FinalPrice = 0"; 
+                DataView freeView = new DataView(dtGames);
+                freeView.RowFilter = "FinalPrice = 0";
                 icFreeGames.ItemsSource = freeView; // Đổ vào ItemsControl Free 
 
                 // 3. Lọc danh sách Game Trả Phí (Giá > 0)
-                DataView paidView = new DataView(dtGames); 
-                paidView.RowFilter = "FinalPrice > 0"; 
+                DataView paidView = new DataView(dtGames);
+                paidView.RowFilter = "FinalPrice > 0";
                 icPaidGames.ItemsSource = paidView; // Đổ vào ItemsControl Paid 
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Lỗi hiển thị danh sách game: " + ex.Message); 
-                }   
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi hiển thị danh sách game: " + ex.Message);
+            }
         }
 
         private void Game_Click(object sender, RoutedEventArgs e)

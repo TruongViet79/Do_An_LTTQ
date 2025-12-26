@@ -11,7 +11,7 @@
     <Grid Background="{DynamicResource AppBackground}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"></ColumnDefinition>
-            <ColumnDefinition Width="11*"></ColumnDefinition>
+            <ColumnDefinition Width="7*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>
@@ -23,6 +23,7 @@
                    Foreground="{DynamicResource HeaderText}" TextAlignment="Center" 
                    VerticalAlignment="Center" FontSize="30"
                    FontWeight="Bold" FontFamily="Comic Sans MS"/>
+
 
         <StackPanel Grid.Row="1" Grid.RowSpan="2" Background="Transparent">
             <Button Style="{StaticResource IconTextButtonStyle}" Margin="10" x:Name="btnDashboard"
@@ -36,7 +37,8 @@
             </Button>
 
             <Button Style="{StaticResource IconTextButtonStyle}" Margin="10" x:Name="btnStore"
-                    Background="{DynamicResource AccentColor}" BorderThickness="0">
+                    Background="{DynamicResource AccentColor}" BorderThickness="0"
+                    Click="btnStore_Click">
                 <StackPanel Orientation="Horizontal" Width="158">
                     <fa:ImageAwesome Icon="ShoppingCart" Width="30" Height="30" Margin="5"
                                      Foreground="{DynamicResource PrimaryText}"/>
@@ -56,8 +58,10 @@
             </Button>
 
             <Button Style="{StaticResource IconTextButtonStyle}" Margin="10" x:Name="btnLibrary"
+
                     Background="{DynamicResource AccentColor}" BorderThickness="0"
                     Click="btnLibrary_Click">
+
                 <StackPanel Orientation="Horizontal" Width="158">
                     <fa:ImageAwesome Icon="ShoppingBag" Width="30" Height="30" Margin="5"
                                      Foreground="{DynamicResource PrimaryText}"/>

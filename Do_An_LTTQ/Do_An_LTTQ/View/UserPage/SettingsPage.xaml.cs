@@ -64,58 +64,58 @@ namespace Do_An_LTTQ.View.UserPage
 
         }
         private void ChangeTheme(object sender, RoutedEventArgs e)
-{
-    if (sender is Button btn && btn.Tag != null)
-    {
-        // 1. Lấy tên theme từ Tag của nút (VD: "Blue", "Light")
-        string theme = btn.Tag.ToString(); 
-
-        // 2. Cập nhật dòng chữ hiển thị "Current: ..."
-        if (txtCurrentTheme != null)
         {
-            txtCurrentTheme.Text = $"Current: {theme}";
-        }
+            if (sender is Button btn && btn.Tag != null)
+            {
+                // 1. Lấy tên theme từ Tag của nút (VD: "Blue", "Light")
+                string theme = btn.Tag.ToString();
 
-        // 3. XỬ LÝ ĐỔI FILE MÀU (Quan trọng)
-        string uriPath = $"Theme/{theme}.xaml"; // Lưu ý: Kiểm tra folder là "Theme" hay "Themes" trong dự án của bạn
-        try 
-        {
-            var newTheme = new ResourceDictionary 
-            { 
-                Source = new Uri(uriPath, UriKind.Relative) 
-            };
+                // 2. Cập nhật dòng chữ hiển thị "Current: ..."
+                if (txtCurrentTheme != null)
+                {
+                    txtCurrentTheme.Text = $"Current: {theme}";
+                }
 
-            // Xóa theme cũ và thêm theme mới
-            var appResources = Application.Current.Resources.MergedDictionaries;
-            appResources.Clear(); // Xóa sạch các dictionary cũ
-            
-            // Nạp lại file từ điển chính (nếu có dùng icon hay style chung)
-            appResources.Add(new ResourceDictionary { Source = new Uri("/Resources/Dictionary.xaml", UriKind.Relative) });
-            
-            // Nạp theme mới vào
-            appResources.Add(newTheme);
+                // 3. XỬ LÝ ĐỔI FILE MÀU (Quan trọng)
+                string uriPath = $"Theme/{theme}.xaml"; // Lưu ý: Kiểm tra folder là "Theme" hay "Themes" trong dự án của bạn
+                try
+                {
+                    var newTheme = new ResourceDictionary
+                    {
+                        Source = new Uri(uriPath, UriKind.Relative)
+                    };
 
-            // 4. Lưu lại tên theme để lần sau mở app nó nhớ
-            Application.Current.Resources["CurrentTheme"] = theme;
+                    // Xóa theme cũ và thêm theme mới
+                    var appResources = Application.Current.Resources.MergedDictionaries;
+                    appResources.Clear(); // Xóa sạch các dictionary cũ
+
+                    // Nạp lại file từ điển chính (nếu có dùng icon hay style chung)
+                    appResources.Add(new ResourceDictionary { Source = new Uri("/Resources/Dictionary.xaml", UriKind.Relative) });
+
+                    // Nạp theme mới vào
+                    appResources.Add(newTheme);
+
+                    // 4. Lưu lại tên theme để lần sau mở app nó nhớ
+                    Application.Current.Resources["CurrentTheme"] = theme;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Lỗi không tìm thấy file màu: " + uriPath);
+                }
+            }
         }
-        catch (Exception ex)
-        {
-            MessageBox.Show("Lỗi không tìm thấy file màu: " + uriPath);
-        }
-    }
-}
 
         private void RadioButton_Checked(object sender, RoutedEventArgs e)
         {
-            if (sender is RadioButton rb  && rb.Tag != null)
+            if (sender is RadioButton rb && rb.Tag != null)
             {
-                double baseSize = double .Parse(rb.Tag.ToString());
+                double baseSize = double.Parse(rb.Tag.ToString());
                 if (txtPreview != null)
                 {
                     txtPreview.FontSize = baseSize;
                 }
 
-                Application.Current.Resources["FontSizeNormal"] =baseSize;
+                Application.Current.Resources["FontSizeNormal"] = baseSize;
 
                 Application.Current.Resources["FontSizeLarge"] = baseSize * 1.5;
 
@@ -126,7 +126,7 @@ namespace Do_An_LTTQ.View.UserPage
         private void Language_Changed(object sender, RoutedEventArgs e)
         {
             if (txtCurrentLanguage == null) return;
-            
+
             if (sender is RadioButton rb)
             {
                 txtCurrentLanguage.Text = $"Current: {rb.Content}";
