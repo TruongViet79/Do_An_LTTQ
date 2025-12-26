@@ -37,7 +37,8 @@
             </Button>
 
             <Button Style="{StaticResource IconTextButtonStyle}" Margin="10" x:Name="btnStore"
-                    Background="{DynamicResource AccentColor}" BorderThickness="0">
+                    Background="{DynamicResource AccentColor}" BorderThickness="0"
+                    Click="btnStore_Click">
                 <StackPanel Orientation="Horizontal" Width="158">
                     <fa:ImageAwesome Icon="ShoppingCart" Width="30" Height="30" Margin="5"
                                      Foreground="{DynamicResource PrimaryText}"/>
