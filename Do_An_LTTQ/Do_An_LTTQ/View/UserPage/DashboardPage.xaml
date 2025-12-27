@@ -35,8 +35,8 @@
                         <Button x:Name="btnAddFr" Background="Transparent" Style="{StaticResource RoundButtonStyle}" Margin="20">
                             <fa:ImageAwesome Icon="UserPlus" Width="50" Height="50"/>
                         </Button>
-                        <Button x:Name="btnNoti" Background="Transparent" Style="{StaticResource RoundButtonStyle}" Margin="20">
-                            <fa:ImageAwesome Icon="Bell" Width="50" Height="50"/>
+                        <Button x:Name="btnCart" Click="btnCart_Click" Background="Transparent" Style="{StaticResource RoundButtonStyle}" Margin="20">
+                            <fa:ImageAwesome Icon="ShoppingBasket" Width="50" Height="50"/>
                         </Button>
                         <Button Margin="20" Background="Transparent" BorderThickness="0" Style="{StaticResource RoundButtonStyle}" Click="ButtonProfile_Click">
                             <Ellipse Width="50" Height="50">

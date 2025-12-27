@@ -1,4 +1,5 @@
-﻿using Do_An_LTTQ.Models;
+﻿using Do_An_LTTQ.Helpers;
+using Do_An_LTTQ.Models;
 using Do_An_LTTQ.Services;
 using System.Windows;
 using System.Windows.Controls;
@@ -7,28 +8,24 @@ namespace Do_An_LTTQ.View.UserPage
 {
     public partial class GameDetailPage : Page
     {
-        private GameService _gameService = new GameService();
+        private Game _currentGame;
 
-        public GameDetailPage(Game selectedGame)
+        public GameDetailPage(Game game)
         {
             InitializeComponent();
-
-            var fullDetailGame = _gameService.GetGameDetails(selectedGame.GameID);
-
-            if (fullDetailGame != null)
-            {
-                this.DataContext = fullDetailGame;
-            }
-            else
-            {
-                this.DataContext = selectedGame;
-            }
+            _currentGame = game;
+            this.DataContext = _currentGame;
         }
 
 
         private void btnAddToCart_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Đã thêm vào giỏ hàng!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+            if (_currentGame != null)
+            {
+                // Thêm vào giỏ hàng
+                CartSession.AddToCart(_currentGame);
+                MessageBox.Show($"Đã thêm {_currentGame.Title} vào giỏ hàng!", "Thành công", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
         }
     }
 }

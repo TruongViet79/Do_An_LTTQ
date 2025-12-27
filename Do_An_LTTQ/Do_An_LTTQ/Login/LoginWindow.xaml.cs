@@ -16,12 +16,8 @@ using System.Windows.Shapes;
 
 namespace Do_An_LTTQ
 {
-    /// <summary>
-    /// Interaction logic for LoginWindow.xaml
-    /// </summary>
     public partial class LoginWindow : Window
     {
-        DatabaseManager dbManager = new DatabaseManager();
         public LoginWindow()
         {
             InitializeComponent();
@@ -29,33 +25,33 @@ namespace Do_An_LTTQ
 
         private void SigninButton_Click(object sender, RoutedEventArgs e)
         {
-            string user = txtUsername.Text.Trim();
-            string pass = txtPassword.Password; // Đảm bảo txtPassword trùng với x:Name trong XAML 
+            string username = txtUsername.Text;
+            string password = pwPassword.Password;
 
-            if (dbManager.AuthenticateUser(user, pass))
+            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
             {
-                //Lưu username
-                App.CurrentUsername = user;
+                MessageBox.Show(
+                    "Please enter your username and password.",
+                    "Missing Information",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning);
+                return;
+            }
 
-                //Lấy email từ csdl
-                DataTable dt = dbManager.GetUserInfo(user);
-                if (dt.Rows.Count > 0)
-                {
-                    App.CurrentEmail = dt.Rows[0]["Email"].ToString();
-                }
-                MainWindow main = new MainWindow();
-                main.Show();
-                this.Close();
-            }
-            else
-            {
-                MessageBox.Show("Tên đăng nhập hoặc mật khẩu không đúng!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+            Do_An_LTTQ.View.MainWindow main = new Do_An_LTTQ.View.MainWindow();
+            main.Show();
+            this.Close();
         }
+
         private void SignupButton_Click(object sender, RoutedEventArgs e)
         {
             SignupWindow signup = new SignupWindow();
             signup.Show();
+            this.Close();
+        }
+
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        {
             this.Close();
         }
     }

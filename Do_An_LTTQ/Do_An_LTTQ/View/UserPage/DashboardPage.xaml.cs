@@ -48,6 +48,11 @@ namespace Do_An_LTTQ.View.UserPage
             frame?.Navigate(new SettingsPage());
 
         }
+        private void btnCart_Click(object sender, RoutedEventArgs e)
+        {
+            // Điều hướng sang trang CartPage
+            NavigationService.Navigate(new CartPage());
+        }
 
         private void LoadData()
         {

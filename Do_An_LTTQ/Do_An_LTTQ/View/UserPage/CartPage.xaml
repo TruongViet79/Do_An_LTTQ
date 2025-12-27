@@ -1,0 +1,86 @@
+﻿<Page x:Class="Do_An_LTTQ.View.UserPage.CartPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:fa="http://schemas.fontawesome.io/icons/"
+      mc:Ignorable="d" 
+      d:DesignHeight="540" d:DesignWidth="995"
+      Title="CartPage">
+
+    <Grid Background="{DynamicResource AppBackground}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Your Shopping Cart" FontSize="32" FontWeight="Bold" 
+                   Foreground="{DynamicResource HeaderText}" 
+                   HorizontalAlignment="Center" Margin="0,20,0,20" FontFamily="Comic Sans MS"/>
+
+        <ListView x:Name="lvCart" Grid.Row="1" Background="Transparent" BorderThickness="0" 
+                  ScrollViewer.HorizontalScrollBarVisibility="Disabled" Margin="50,0,50,0">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                    <Setter Property="Background" Value="Transparent"/>
+                    <Setter Property="Margin" Value="0,5"/>
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Border CornerRadius="10" Background="{DynamicResource CardBackground}" Padding="10">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Border CornerRadius="5" ClipToBounds="True">
+                                <Image Source="{Binding MainCoverImageURL}" Stretch="UniformToFill" Height="60"/>
+                            </Border>
+
+                            <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="15,0,0,0">
+                                <TextBlock Text="{Binding Title}" FontWeight="Bold" FontSize="16" Foreground="{DynamicResource PrimaryText}"/>
+                                <TextBlock Text="{Binding DeveloperName}" FontSize="12" Foreground="Gray"/>
+                            </StackPanel>
+
+                            <TextBlock Grid.Column="2" Text="{Binding FinalPrice, StringFormat={}{0:N0} VNĐ}" 
+                                       VerticalAlignment="Center" FontWeight="Bold" Foreground="#BEEE11" Margin="0,0,20,0" FontSize="14"/>
+
+                            <Button Grid.Column="3" Click="btnRemove_Click" Width="30" Height="30" 
+                                    Background="IndianRed" BorderThickness="0" Cursor="Hand">
+                                <Button.Resources>
+                                    <Style TargetType="Border">
+                                        <Setter Property="CornerRadius" Value="15"/>
+                                    </Style>
+                                </Button.Resources>
+                                <fa:ImageAwesome Icon="Minus" Foreground="White" Width="10" Height="10"/>
+                            </Button>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <Border Grid.Row="2" Background="{DynamicResource CardBackground}" CornerRadius="20,20,0,0" Margin="20,0,20,0" Padding="20">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <TextBlock Text="Total:" FontSize="20" FontWeight="Bold" Foreground="Gray" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                <TextBlock x:Name="txtTotalAmount" Text="0 VNĐ" FontSize="24" FontWeight="Bold" Foreground="#BEEE11" VerticalAlignment="Center" Margin="0,0,30,0"/>
+
+                <Button x:Name="btnCheckout" Click="btnCheckout_Click" Content="CHECKOUT" 
+                        Width="150" Height="40" Background="{DynamicResource AccentColor}" 
+                        Foreground="White" FontWeight="Bold" FontSize="16" BorderThickness="0" Cursor="Hand">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="10"/>
+                        </Style>
+                    </Button.Resources>
+                </Button>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Page>

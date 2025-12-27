@@ -8,17 +8,18 @@
     <Compile Update="Login\SignupWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="View\UserPage\CartPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="View\UserPage\DashboardPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="View\UserPage\GameDetailPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-
     <Compile Update="View\UserPage\LibraryPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-
     <Compile Update="View\UserPage\SettingsPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
