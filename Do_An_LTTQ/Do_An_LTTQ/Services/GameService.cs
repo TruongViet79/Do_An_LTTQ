@@ -31,8 +31,38 @@ namespace Do_An_LTTQ.Services
         {
             using (var context = new GameStoreDbContext())
             {
-                // Tìm game có ID khớp, nếu không thấy trả về null
-                return context.Games.FirstOrDefault(g => g.GameID == gameId);
+                // 1. Lấy thông tin game (EF sẽ bỏ qua cột Categories nhờ [NotMapped])
+                var game = context.Games.FirstOrDefault(g => g.GameID == gameId);
+
+                if (game != null)
+                {
+                    // 2. Truy vấn thủ công để lấy danh sách tên thể loại
+                    // Giả sử bảng danh mục tên là CATEGORY, cột tên là CategoryName
+                    // Bảng trung gian là GAMECATEGORY
+                    try
+                    {
+                        // Câu lệnh SQL lấy tên thể loại dựa trên GameID
+                        string sql = @"
+                            SELECT c.CategoryName 
+                            FROM CATEGORY c
+                            JOIN GAMECATEGORIES gc ON c.CategoryID = gc.CategoryID
+                            WHERE gc.GameID = {0}";
+
+                        // Chạy query lấy list tên
+                        var catNames = context.Database
+                                              .SqlQueryRaw<string>(sql, gameId)
+                                              .ToList();
+
+                        // 3. Nối lại thành chuỗi (VD: "Action, RPG") để UI hiển thị được
+                        game.Categories = string.Join(", ", catNames);
+                    }
+                    catch
+                    {
+                        // Nếu lỡ bảng tên khác thì nó ko chết app, chỉ trống category thôi
+                        game.Categories = "";
+                    }
+                }
+                return game;
             }
         }
 

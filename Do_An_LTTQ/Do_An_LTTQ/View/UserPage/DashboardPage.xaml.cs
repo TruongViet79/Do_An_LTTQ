@@ -58,43 +58,51 @@ namespace Do_An_LTTQ.View.UserPage
         {
             try
             {
-                // 1. Lấy toàn bộ game từ DatabaseManager
-                DataTable dtGames = _dbManager.GetDashboardGames(); 
+                // 1. Lấy dữ liệu từ Database
+                DataTable dtGames = _dbManager.GetDashboardGames();
 
-                // 2. Lọc danh sách Game Miễn Phí (Giá = 0)
-                DataView freeView = new DataView(dtGames); 
-                freeView.RowFilter = "FinalPrice = 0"; 
-                icFreeGames.ItemsSource = freeView; // Đổ vào ItemsControl Free 
+                // 2. LỌC TRÙNG THEO TIÊU ĐỀ (TITLE)
+                // Vì database của bạn có các game trùng tên nhưng khác ID (VD: CS2 ở ID 7, 27, 35)
+                // Ta dùng Dictionary với Key là Title để ép mỗi tên game chỉ hiện 1 lần.
+                var uniqueGamesByTitle = new Dictionary<string, Game>();
 
-                // 3. Lọc danh sách Game Trả Phí (Giá > 0)
-                DataView paidView = new DataView(dtGames); 
-                paidView.RowFilter = "FinalPrice > 0"; 
-                icPaidGames.ItemsSource = paidView; // Đổ vào ItemsControl Paid 
-                }
-                catch (Exception ex)
+                foreach (DataRow row in dtGames.Rows)
                 {
-                    MessageBox.Show("Lỗi hiển thị danh sách game: " + ex.Message); 
-                }   
+                    string title = row["Title"].ToString();
+
+                    if (!uniqueGamesByTitle.ContainsKey(title))
+                    {
+                        uniqueGamesByTitle.Add(title, new Game
+                        {
+                            GameID = Convert.ToInt32(row["GameID"]),
+                            Title = title,
+                            FinalPrice = row["FinalPrice"] != DBNull.Value ? Convert.ToDecimal(row["FinalPrice"]) : 0,
+                            MainCoverImageURL = row["MainCoverImageURL"].ToString(),
+                        });
+                    }
+                }
+
+                // Chuyển Dictionary thành List sạch
+                var cleanList = uniqueGamesByTitle.Values.ToList();
+
+                // 3. Phân loại và đổ vào ItemsControl (ItemsSource nhận List<Game>)
+                icFreeGames.ItemsSource = cleanList.Where(g => g.FinalPrice == 0).ToList();
+                icPaidGames.ItemsSource = cleanList.Where(g => g.FinalPrice > 0).ToList();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi hiển thị danh sách game: " + ex.Message);
+            }
         }
 
         private void Game_Click(object sender, RoutedEventArgs e)
         {
             Button btn = sender as Button;
 
-            // Vì ItemsSource của đại ca là DataView, nên Item là DataRowView
-            if (btn.DataContext is DataRowView row)
+            // SỬA Ở ĐÂY: DataContext bây giờ là Game, không phải DataRowView
+            if (btn.DataContext is Game selectedGame)
             {
-                // Chuyển DataRow thành Object Game
-                Game selectedGame = new Game
-                {
-                    GameID = (int)row["GameID"],
-                    Title = row["Title"].ToString(),
-                    FinalPrice = row["FinalPrice"] != DBNull.Value ? Convert.ToDecimal(row["FinalPrice"]) : 0,
-                    MainCoverImageURL = row["MainCoverImageURL"].ToString(),
-
-                };
-
-                // Chuyển trang
+                // Không cần tạo mới nữa, truyền thẳng cái game lấy được qua
                 NavigationService.Navigate(new GameDetailPage(selectedGame));
             }
         }

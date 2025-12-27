@@ -19,7 +19,8 @@ namespace Do_An_LTTQ.Models
         public string MainCoverImageURL { get; set; }
         public DateTime? ReleaseDate { get; set; }
         public string AgeRating { get; set; }
-
+        [NotMapped]
+        public string Categories { get; set; }
         public string SystemRequirements { get; set; } 
         public string SupportedLanguages { get; set; }
         [NotMapped]
@@ -27,5 +28,14 @@ namespace Do_An_LTTQ.Models
 
         [NotMapped]
         public string PublisherName { get; set; }
+
+        public List<string> CategoryList
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(Categories)) return new List<string>();
+                return Categories.Split(',').Select(s => s.Trim()).ToList();
+            }
+        }
     }
 }
