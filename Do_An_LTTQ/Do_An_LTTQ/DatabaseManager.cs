@@ -122,5 +122,33 @@ namespace Do_An_LTTQ
                 return dt;
             }
         }
+
+        public DataTable GetAllGamesForStore()
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                // Gọi Procedure sp_GetAllGamesForDisplay mà bạn đã viết trong file SQL
+                SqlCommand cmd = new SqlCommand("sp_GetAllGamesForDisplay", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                return dt;
+            }
+        }
+
+        public DataTable ExecuteQuery(string query)
+        {
+            DataTable data = new DataTable();
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                SqlCommand command = new SqlCommand(query, connection);
+                SqlDataAdapter adapter = new SqlDataAdapter(command);
+                adapter.Fill(data);
+            }
+            return data;
+        }
     }
 }
