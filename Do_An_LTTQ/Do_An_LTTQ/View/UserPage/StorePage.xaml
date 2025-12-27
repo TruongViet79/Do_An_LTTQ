@@ -8,7 +8,9 @@
 
     <Page.Resources>
         <DataTemplate x:Key="FullGameCard">
-            <Border Width="200" Height="270" Margin="0,0,15,15" Background="#F8F8F8" CornerRadius="10" Cursor="Hand">
+            <Border Width="200" Height="270" Margin="0,0,15,15" Background="#F8F8F8" CornerRadius="10" Cursor="Hand"
+                    Tag="{Binding GameID}"
+                    MouseLeftButtonDown="GameBorder_MouseDown">
                 <StackPanel>
                     <Rectangle Width="200" Height="120" VerticalAlignment="Top">
                         <Rectangle.Fill>
@@ -110,96 +112,7 @@
                                         </ItemsControl.ItemsPanel>
 
 
-                                        <Border Width="200" Height="270" Margin="0,0,15,15" 
-                                                Background="#F8F8F8" CornerRadius="10" Cursor="Hand"
-                                                MouseLeftButtonDown="GameBorder_MouseDown">
-                                            <StackPanel>
-                                                <Rectangle Width="200" Height="120" Margin="0" VerticalAlignment="Top">
-                                                    <Rectangle.Fill>
-                                                        <ImageBrush ImageSource="/Resources/idle2.png" Stretch="UniformToFill"/>
-                                                    </Rectangle.Fill>
-                                                </Rectangle>
-                                                <StackPanel Margin="10">
-                                                    <TextBlock Text="Hogwarts Legacy" FontSize="16" FontWeight="SemiBold" 
-                                                               Margin="0,5,0,3" TextWrapping="Wrap" 
-                                                               FontFamily="Comic Sans MS"/>
-
-                                                    <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
-                                                        <Border Background="#E1F5FE" CornerRadius="3" Padding="4,2">
-                                                            <TextBlock Text="RPG" FontSize="10" Foreground="#0277BD"/>
-                                                        </Border>
-                                                        <Border Background="#E8F5E9" CornerRadius="3" 
-                                                                Padding="4,2" Margin="5,0,0,0">
-                                                            <TextBlock Text="Open World" FontSize="10" 
-                                                                       Foreground="#2E7D32"/>
-                                                        </Border>
-                                                    </StackPanel>
-
-                                                    <TextBlock Text="From $49.99" FontWeight="Bold" 
-                                                               HorizontalAlignment="Right" Margin="0,15,0,0"/>
-                                                </StackPanel>
-                                            </StackPanel>
-                                        </Border>
-
-                                        <Border Width="200" Height="270" Margin="0,0,15,15" 
-                                                Background="#F8F8F8" CornerRadius="10" Cursor="Hand">
-                                            <StackPanel>
-                                                <Rectangle Width="200" Height="120" Margin="0" VerticalAlignment="Top">
-                                                    <Rectangle.Fill>
-                                                        <ImageBrush ImageSource="/Resources/idle2.png" Stretch="UniformToFill"/>
-                                                    </Rectangle.Fill>
-                                                </Rectangle>
-                                                <StackPanel Margin="10">
-                                                    <TextBlock Text="Palworld" FontSize="16" FontWeight="SemiBold" 
-                                                               Margin="0,5,0,3" TextWrapping="Wrap" 
-                                                               FontFamily="Comic Sans MS"/>
-
-                                                    <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
-                                                        <Border Background="#FFEBEE" CornerRadius="3" Padding="4,2">
-                                                            <TextBlock Text="Survival" FontSize="10" Foreground="#D32F2F"/>
-                                                        </Border>
-                                                        <Border Background="#F3E5F5" CornerRadius="3" 
-                                                                Padding="4,2" Margin="5,0,0,0">
-                                                            <TextBlock Text="Multiplayer" FontSize="10" 
-                                                                       Foreground="#6A1B9A"/>
-                                                        </Border>
-                                                    </StackPanel>
-
-                                                    <TextBlock Text="$19.99" FontWeight="Bold" 
-                                                               HorizontalAlignment="Right" Margin="0,15,0,0"/>
-                                                </StackPanel>
-                                            </StackPanel>
-                                        </Border>
-
-                                        <Border Width="200" Height="270" Margin="0,0,15,15" 
-                                                Background="#F8F8F8" CornerRadius="10" Cursor="Hand">
-                                            <StackPanel>
-                                                <Rectangle Width="200" Height="120" Margin="0" VerticalAlignment="Top">
-                                                    <Rectangle.Fill>
-                                                        <ImageBrush ImageSource="/Resources/idle2.png" Stretch="UniformToFill"/>
-                                                    </Rectangle.Fill>
-                                                </Rectangle>
-                                                <StackPanel Margin="10">
-                                                    <TextBlock Text="Sea of Thieves" FontSize="16" FontWeight="SemiBold" 
-                                                               Margin="0,5,0,3" TextWrapping="Wrap" 
-                                                               FontFamily="Comic Sans MS"/>
-
-                                                    <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
-                                                        <Border Background="#E0F7FA" CornerRadius="3" Padding="4,2">
-                                                            <TextBlock Text="Adventure" FontSize="10" 
-                                                                       Foreground="#00838F"/>
-                                                        </Border>
-                                                        <Border Background="#E8F5E9" CornerRadius="3" 
-                                                                Padding="4,2" Margin="5,0,0,0">
-                                                            <TextBlock Text="Co-op" FontSize="10" Foreground="#2E7D32"/>
-                                                        </Border>
-                                                    </StackPanel>
-
-                                                    <TextBlock Text="Sale: $9.99" FontWeight="Bold" Foreground="#D32F2F" 
-                                                               HorizontalAlignment="Right" Margin="0,15,0,0"/>
-                                                </StackPanel>
-                                            </StackPanel>
-                                        </Border>
+                                        
 
                                     </ItemsControl>
                                 </StackPanel>

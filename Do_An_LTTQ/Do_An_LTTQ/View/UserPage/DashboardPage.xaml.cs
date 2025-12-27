@@ -99,20 +99,10 @@ namespace Do_An_LTTQ.View.UserPage
         {
             Button btn = sender as Button;
 
-            // Vì ItemsSource của đại ca là DataView, nên Item là DataRowView
-            if (btn.DataContext is DataRowView row)
+            // SỬA Ở ĐÂY: DataContext bây giờ là Game, không phải DataRowView
+            if (btn.DataContext is Game selectedGame)
             {
-                // Chuyển DataRow thành Object Game
-                Game selectedGame = new Game
-                {
-                    GameID = (int)row["GameID"],
-                    Title = row["Title"].ToString(),
-                    FinalPrice = row["FinalPrice"] != DBNull.Value ? Convert.ToDecimal(row["FinalPrice"]) : 0,
-                    MainCoverImageURL = row["MainCoverImageURL"].ToString(),
-
-                };
-
-                // Chuyển trang
+                // Không cần tạo mới nữa, truyền thẳng cái game lấy được qua
                 NavigationService.Navigate(new GameDetailPage(selectedGame));
             }
         }
