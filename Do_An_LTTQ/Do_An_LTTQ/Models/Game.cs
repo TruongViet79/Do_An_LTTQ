@@ -27,5 +27,14 @@ namespace Do_An_LTTQ.Models
 
         [NotMapped]
         public string PublisherName { get; set; }
+
+        public List<string> CategoryList
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(Categories)) return new List<string>();
+                return Categories.Split(',').Select(s => s.Trim()).ToList();
+            }
+        }
     }
 }

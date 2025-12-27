@@ -15,16 +15,25 @@
                             <ImageBrush ImageSource="{Binding MainCoverImageURL}" Stretch="UniformToFill"/>
                         </Rectangle.Fill>
                     </Rectangle>
+
                     <StackPanel Margin="10">
                         <TextBlock Text="{Binding Title}" FontSize="16" FontWeight="SemiBold" TextWrapping="Wrap" FontFamily="Comic Sans MS" Margin="0,5,0,3"/>
-                        <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
-                            <Border Background="#E1F5FE" CornerRadius="3" Padding="4,2">
-                                <TextBlock Text="RPG" FontSize="10" Foreground="#0277BD"/>
-                            </Border>
-                            <Border Background="#E8F5E9" CornerRadius="3" Padding="4,2" Margin="5,0,0,0">
-                                <TextBlock Text="Action" FontSize="10" Foreground="#2E7D32"/>
-                            </Border>
-                        </StackPanel>
+
+                        <ItemsControl ItemsSource="{Binding CategoryList}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel Orientation="Horizontal"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Background="#E1F5FE" CornerRadius="3" Padding="4,2" Margin="0,0,5,5">
+                                        <TextBlock Text="{Binding}" FontSize="10" Foreground="#0277BD"/>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+
                         <TextBlock Text="{Binding BasePrice, StringFormat='{}{0:N0} VNĐ'}" FontWeight="Bold" HorizontalAlignment="Right" Margin="0,15,0,0"/>
                     </StackPanel>
                 </StackPanel>
@@ -39,6 +48,7 @@
                     <RowDefinition Height="70"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
+
                 <Grid Grid.Row="0" Margin="0,0,0,10">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>
@@ -64,6 +74,7 @@
                                 </StackPanel>
                             </TabItem.Header>
                         </TabItem>
+
                         <TabItem Style="{StaticResource StoreTabControlStyle}" IsSelected="True">
                             <TabItem.Header>
                                 <StackPanel Orientation="Horizontal">
@@ -101,6 +112,7 @@
                                 </StackPanel>
                             </ScrollViewer>
                         </TabItem>
+
                         <TabItem Style="{StaticResource StoreTabControlStyle}">
                             <TabItem.Header>
                                 <StackPanel Orientation="Horizontal">
@@ -121,6 +133,7 @@
                                 </StackPanel>
                             </ScrollViewer>
                         </TabItem>
+
                         <TabItem Style="{StaticResource StoreTabControlStyle}">
                             <TabItem.Header>
                                 <StackPanel Orientation="Horizontal">
@@ -141,6 +154,7 @@
                                 </StackPanel>
                             </ScrollViewer>
                         </TabItem>
+
                         <TabItem Style="{StaticResource StoreTabControlStyle}">
                             <TabItem.Header>
                                 <StackPanel Orientation="Horizontal">
@@ -170,6 +184,7 @@
                                 </StackPanel>
                             </TabItem.Header>
                         </TabItem>
+
                         <TabItem Style="{StaticResource StoreTabControlStyle}">
                             <TabItem.Header>
                                 <TextBlock Text="Action" FontSize="14"/>
@@ -187,6 +202,7 @@
                                 </StackPanel>
                             </ScrollViewer>
                         </TabItem>
+
                         <TabItem Style="{StaticResource StoreTabControlStyle}">
                             <TabItem.Header>
                                 <TextBlock Text="Adventure" FontSize="14"/>
@@ -204,6 +220,7 @@
                                 </StackPanel>
                             </ScrollViewer>
                         </TabItem>
+
                         <TabItem Style="{StaticResource StoreTabControlStyle}">
                             <TabItem.Header>
                                 <TextBlock Text="Casual" FontSize="14"/>
@@ -221,6 +238,7 @@
                                 </StackPanel>
                             </ScrollViewer>
                         </TabItem>
+
                         <TabItem Style="{StaticResource StoreTabControlStyle}">
                             <TabItem.Header>
                                 <TextBlock Text="Strategy" FontSize="14"/>

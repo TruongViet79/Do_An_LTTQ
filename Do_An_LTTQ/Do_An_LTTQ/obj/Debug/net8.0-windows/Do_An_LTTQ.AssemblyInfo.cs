@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Do_An_LTTQ")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+40d76bf63a4728edae99799fe42e262fb32c15bd")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e13cf73141bb5f45f9930ccdc4618a8cca053054")]
 [assembly: System.Reflection.AssemblyProductAttribute("Do_An_LTTQ")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Do_An_LTTQ")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
