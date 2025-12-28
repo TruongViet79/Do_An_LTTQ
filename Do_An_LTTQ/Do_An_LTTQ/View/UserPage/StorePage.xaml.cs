@@ -144,5 +144,61 @@ namespace Do_An_LTTQ.View.UserPage
                 }
             }
         }
+
+        private void BtnBuyNow_Click(object sender, RoutedEventArgs e)
+        {
+            // Kiểm tra xem có game nổi bật nào đang hiện không
+            if (FeaturedGame != null)
+            {
+                // Chuyển sang trang Detail và mang theo thông tin game đó
+                NavigationService.Navigate(new GameDetailPage(FeaturedGame));
+            }
+        }
+
+        // 1. Thêm Constructor nhận tham số category
+        public StorePage(string categoryToSelect) : this() // Gọi constructor gốc để LoadStoreData trước
+        {
+            // Sau khi load xong dữ liệu thì chọn tab
+            SelectCategoryTab(categoryToSelect);
+        }
+
+        // 2. Hàm xử lý chọn Tab dựa trên tên
+        private void SelectCategoryTab(string categoryName)
+        {
+            if (string.IsNullOrEmpty(categoryName)) return;
+
+            // Chuyển về chữ thường để so sánh cho dễ (vì DB có thể là "Action", "action"...)
+            string cat = categoryName.ToLower().Trim();
+
+            // Dựa vào thứ tự Tab trong file XAML của bạn:
+            // Tab 0: Featured
+            // Tab 1: Top Sellers
+            // Tab 2: On Sales
+            // Tab 3: All Games
+            // Tab 4: (Gạch ngang - Separator)
+            // Tab 5: Action
+            // Tab 6: Adventure
+            // Tab 7: Casual
+            // Tab 8: Strategy
+
+            int tabIndex = -1;
+
+            if (cat.Contains("action") || cat.Contains("hành động")) tabIndex = 6;
+            else if (cat.Contains("adventure") || cat.Contains("phiêu lưu")) tabIndex = 7;
+            else if (cat.Contains("casual") || cat.Contains("mô phỏng")) tabIndex = 8;
+            else if (cat.Contains("strategy") || cat.Contains("chiến lược")) tabIndex = 9;
+
+            // Nếu tìm thấy Tab phù hợp thì chuyển sang
+            if (tabIndex != -1 && MainStoreTabControl != null)
+            {
+                MainStoreTabControl.SelectedIndex = tabIndex;
+            }
+            else
+            {
+                // Nếu không có tab riêng (VD: RPG), ta có thể chuyển về tab "All Games" (Tab 3)
+                // Hoặc xử lý lọc nâng cao sau này. Tạm thời về All Games.
+                MainStoreTabControl.SelectedIndex = 3;
+            }
+        }
     }
 }
