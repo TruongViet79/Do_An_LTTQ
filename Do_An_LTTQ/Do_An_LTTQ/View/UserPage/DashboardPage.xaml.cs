@@ -29,6 +29,11 @@ namespace Do_An_LTTQ.View.UserPage
         {
             InitializeComponent();
             txtDisplayUsername.Text = App.CurrentUsername;
+            if (!string.IsNullOrEmpty(App.CurrentAvatarURL) && System.IO.File.Exists(App.CurrentAvatarURL))
+            {
+                imgDashboardAvatar.ImageSource = new BitmapImage(new Uri(App.CurrentAvatarURL));
+            }
+
             LoadData();
         }
 

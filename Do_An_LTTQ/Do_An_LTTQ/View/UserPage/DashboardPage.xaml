@@ -41,7 +41,7 @@
                         <Button Margin="20" Background="Transparent" BorderThickness="0" Style="{StaticResource RoundButtonStyle}" Click="ButtonProfile_Click">
                             <Ellipse Width="50" Height="50">
                                 <Ellipse.Fill>
-                                    <ImageBrush ImageSource="/Resources/idle2.png" Stretch="UniformToFill"/>
+                                    <ImageBrush x:Name="imgDashboardAvatar" ImageSource="/Resources/idle2.png" Stretch="UniformToFill"/>
                                 </Ellipse.Fill>
                             </Ellipse>
                         </Button>
