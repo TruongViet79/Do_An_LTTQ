@@ -192,6 +192,9 @@ namespace Do_An_LTTQ.View.UserPage
             // login.Show();
 
             Window.GetWindow(this).Close();
+            LoginWindow loginWindow = new LoginWindow();
+            loginWindow.Show();
+            
         }
 
         private void chkAutoLogin_Click(object sender, RoutedEventArgs e)
