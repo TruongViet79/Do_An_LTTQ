@@ -75,7 +75,9 @@
                 <StackPanel Height="283" VerticalAlignment="Top">
                     <Rectangle x:Name="rectLastGameImage" Height="136" Margin="20" Width="217">
                         <Rectangle.Fill>
-                            <ImageBrush x:Name="imgLastGame" ImageSource="/Resources/idle2.png" Stretch="UniformToFill"/>
+                            <ImageBrush x:Name="imgLastGame" 
+            ImageSource="pack://application:,,,/Do_An_LTTQ;component/Resources/idle2.png" 
+            Stretch="UniformToFill"/>
                         </Rectangle.Fill>
                     </Rectangle>
                     <TextBlock x:Name="txtStatusLabel" Text="" TextAlignment="Center" FontSize="16" FontWeight="Bold" FontFamily="Comic Sans MS" Foreground="{DynamicResource PrimaryText}"/>

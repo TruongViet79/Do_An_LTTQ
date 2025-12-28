@@ -67,7 +67,8 @@ namespace Do_An_LTTQ.View
             }
             catch
             {
-                imgLastGame.ImageSource = new BitmapImage(new Uri("/Resources/idle2.png", UriKind.RelativeOrAbsolute));
+                // Lưu ý: Dùng đường dẫn "pack://..." để lấy ảnh trong Resource
+                imgLastGame.ImageSource = new BitmapImage(new Uri("pack://application:,,,/Do_An_LTTQ;component/Resources/idle2.png"));
             }
         }
 
@@ -93,7 +94,7 @@ namespace Do_An_LTTQ.View
                     txtStatusLabel.Text = "";
                     txtGameTitleDisplay.Text = "";
                     txtButtonText.Text = "No game played";
-                    imgLastGame.ImageSource = new BitmapImage(new Uri("/Resources/idle2.png", UriKind.RelativeOrAbsolute));
+                    imgLastGame.ImageSource = new BitmapImage(new Uri("pack://application:,,,/Do_An_LTTQ;component/Resources/idle2.png"));
                 }
             }
             catch { /* Tránh crash app nếu có lỗi DB */ }

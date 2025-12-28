@@ -1,16 +1,19 @@
 ﻿using Do_An_LTTQ.Helpers;
 using Do_An_LTTQ.Models;
 using Do_An_LTTQ.Services;
+using System;
 using System.Data;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Navigation;
 
 namespace Do_An_LTTQ.View.UserPage
 {
     public partial class GameDetailPage : Page
     {
         private Game _currentGame;
-        private GameService _gameService = new GameService(); // Gọi service
+        private GameService _gameService = new GameService();
 
         public GameDetailPage(Game game)
         {
@@ -18,75 +21,88 @@ namespace Do_An_LTTQ.View.UserPage
 
             try
             {
-                // 1. Kiểm tra nếu đối tượng game truyền vào bị null
                 if (game == null)
                 {
                     MessageBox.Show("Dữ liệu trò chơi không hợp lệ.");
+                    // Nếu không có game, có thể quay lại trang trước ngay
+                    if (NavigationService != null && NavigationService.CanGoBack)
+                        NavigationService.GoBack();
                     return;
                 }
 
-                // 2. Gọi Service để lấy thông tin chi tiết (Description, SysReq...) từ DB
-                // Đây là nơi dễ gây lỗi nhất nếu kết nối database có vấn đề
+                // Lấy thông tin chi tiết từ DB để có đầy đủ Description, SysReq, v.v.
                 _currentGame = _gameService.GetGameDetails(game.GameID);
 
-                // 3. Nếu không tìm thấy trong DB, sử dụng dữ liệu tạm thời được truyền qua
+                // Nếu DB lỗi hoặc không tìm thấy, dùng tạm object truyền qua
                 if (_currentGame == null)
                 {
                     _currentGame = game;
                 }
+
+                // Quan trọng: Gán DataContext để XAML Binding hoạt động
+                this.DataContext = _currentGame;
             }
             catch (Exception ex)
             {
-                // 4. Bẫy lỗi: Nếu có lỗi SQL hoặc lỗi hệ thống, app sẽ hiện thông báo thay vì bị văng
-                MessageBox.Show("Lỗi khi tải chi tiết game: " + ex.Message);
+                MessageBox.Show("Lỗi hiển thị: " + ex.Message);
                 _currentGame = game;
+                this.DataContext = _currentGame;
             }
-
-            // Gán dữ liệu cho giao diện
-            this.DataContext = _currentGame;
         }
 
+        // Sự kiện quay lại trang trước
+        private void BtnBack_Click(object sender, RoutedEventArgs e)
+        {
+            if (NavigationService != null && NavigationService.CanGoBack)
+            {
+                NavigationService.GoBack();
+            }
+        }
+
+        // Sự kiện thêm vào giỏ hàng
         private void btnAddToCart_Click(object sender, RoutedEventArgs e)
         {
-            // 1. Lấy thông tin game từ nút bấm
-            var button = sender as Button;
-            var game = button.DataContext as Game;
+            // Kiểm tra user đăng nhập (Giả sử UserID = 0 là chưa đăng nhập hoặc Guest)
+            // Bạn có thể tùy chỉnh logic check user ở đây
+            if (App.CurrentUserID <= 0)
+            {
+                MessageBox.Show("Vui lòng đăng nhập để mua hàng!", "Thông báo");
+                return;
+            }
 
-            if (game == null) return;
-
-            // 2. Kiểm tra xem user đã sở hữu game này chưa
+            // Kiểm tra sở hữu
             int currentUserId = App.CurrentUserID;
             DatabaseManager dbManager = new DatabaseManager();
 
-            // Gọi procedure kiểm tra
-            string sqlCheck = $"EXEC sp_CheckGameOwnership @UserID = {currentUserId}, @GameID = {game.GameID}";
-            DataTable dt = dbManager.ExecuteQuery(sqlCheck);
+            string sqlCheck = $"EXEC sp_CheckGameOwnership @UserID = {currentUserId}, @GameID = {_currentGame.GameID}";
 
-            if (dt != null && dt.Rows.Count > 0)
+            try
             {
-                int isOwned = Convert.ToInt32(dt.Rows[0]["IsOwned"]);
-
-                if (isOwned == 1)
+                DataTable dt = dbManager.ExecuteQuery(sqlCheck);
+                if (dt != null && dt.Rows.Count > 0)
                 {
-                    // NẾU ĐÃ MUA: Hiện thông báo và dừng lại luôn, không cho thêm vào giỏ
-                    MessageBox.Show($"Bạn đã sở hữu trò chơi '{game.Title}' trong Thư viện rồi!", "Thông báo sở hữu");
-                    return;
+                    int isOwned = Convert.ToInt32(dt.Rows[0]["IsOwned"]);
+                    if (isOwned == 1)
+                    {
+                        MessageBox.Show($"Bạn đã sở hữu trò chơi '{_currentGame.Title}' trong thư viện!", "Đã sở hữu");
+                        return;
+                    }
+                }
+
+                // Thêm vào giỏ
+                if (_currentGame != null)
+                {
+                    CartSession.AddToCart(_currentGame);
+                    MessageBox.Show($"Đã thêm {_currentGame.Title} vào giỏ hàng!", "Thành công", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
             }
-            if (_currentGame != null)
+            catch (Exception ex)
             {
-                CartSession.AddToCart(_currentGame);
-                MessageBox.Show($"Đã thêm {_currentGame.Title} vào giỏ hàng!", "Thành công", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("Lỗi kiểm tra sở hữu: " + ex.Message);
             }
         }
 
-        private void CategoryButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (sender is Button btn && btn.Content is string categoryName)
-            {
-                // Điều hướng sang StorePage và gửi kèm tên thể loại (VD: "Action")
-                NavigationService.Navigate(new StorePage(categoryName));
-            }
-        }
+        // Sự kiện mở Website game
+        
     }
 }
