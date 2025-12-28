@@ -27,10 +27,11 @@
                                 <StackPanel HorizontalAlignment="Center" Margin="5">
                                     <Ellipse Width="100" Height="100" Margin="10">
                                         <Ellipse.Fill>
-                                            <ImageBrush ImageSource="/Resources/idle2.png" Stretch="UniformToFill"/>
+                                            <ImageBrush x:Name="imgAvatarBrush" ImageSource="/Resources/idle2.png" Stretch="UniformToFill"/>
                                         </Ellipse.Fill>
                                     </Ellipse>
                                     <Button Content="Change Avatar" Width="160" Height="40" 
+                                            Click="ChangeAvatar_Click"
                        Background="Lavender" Foreground="Black" 
                        FontWeight="Bold" Cursor="Hand" Margin="5"/>
                                 </StackPanel>
@@ -49,7 +50,7 @@
 
                                     <TextBlock Grid.Row="0" Grid.Column="0" Text="Username:" 
                           VerticalAlignment="Center" FontSize="{DynamicResource FontSizeNormal}" Margin="10"/>
-                                    <TextBox x:Name="txtUsername" Grid.Row="0" Grid.Column="1" 
+                                    <TextBox x:Name="txtUsername" Grid.Row="0" Grid.Column="1" IsReadOnly="True"
                         Text="May1804" Margin="10" Padding="10" FontSize="{DynamicResource FontSizeNormal}"/>
 
                                     <TextBlock Grid.Row="1" Grid.Column="0" Text="Email:" 

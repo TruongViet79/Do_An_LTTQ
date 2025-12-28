@@ -1,29 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.Win32;
+using System;
+using System.Data;
+using System.Data.SqlClient;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Do_An_LTTQ.View.UserPage
 {
-    /// <summary>
-    /// Interaction logic for SettingsPage.xaml
-    /// </summary>
     public partial class SettingsPage : Page
     {
+        private string _selectedAvatarPath = null;
+        // LƯU Ý: Thay đổi chuỗi kết nối này cho đúng với máy của bạn
+        private string _connectionString = "Data Source=.;Initial Catalog=GameStoreDB;Integrated Security=True";
+
         public SettingsPage()
         {
             InitializeComponent();
-
             LoadCurrentSetting();
         }
 
@@ -32,171 +27,177 @@ namespace Do_An_LTTQ.View.UserPage
             txtUsername.Text = App.CurrentUsername;
             txtEmail.Text = App.CurrentEmail;
 
-            // 1. Lấy cỡ chữ đang dùng trong App ra (nếu chưa có thì mặc định là 14)
+            // Load Avatar
+            if (!string.IsNullOrEmpty(App.CurrentAvatarURL) && File.Exists(App.CurrentAvatarURL))
+            {
+                imgAvatarBrush.ImageSource = new BitmapImage(new Uri(App.CurrentAvatarURL));
+            }
+
+            // Load Font Size
             double currentSize = 14;
             if (Application.Current.Resources.Contains("FontSizeNormal"))
             {
                 currentSize = (double)Application.Current.Resources["FontSizeNormal"];
             }
-
-            // 2. Tick lại vào đúng cái nút tương ứng
-            // Lưu ý: Phải ngắt sự kiện Checked tạm thời nếu không muốn nó chạy logic update dư thừa (tuỳ chọn)
-            switch (currentSize)
+            if (rbSmall != null && rbMedium != null && rbLarge != null)
             {
-                case 12: rbSmall.IsChecked = true; break;
-                case 14: rbMedium.IsChecked = true; break;
-                case 16: rbLarge.IsChecked = true; break;
+                switch (currentSize)
+                {
+                    case 12: rbSmall.IsChecked = true; break;
+                    case 14: rbMedium.IsChecked = true; break;
+                    case 16: rbLarge.IsChecked = true; break;
+                }
             }
 
-            //Language
-            if (lgVN.IsChecked == true)
-                txtCurrentLanguage.Text = $"Current: {lgVN.Content}";
-            else if (lgEL.IsChecked == true)
-                txtCurrentLanguage.Text = $"Current: {lgEL.Content}";
-            ;
-
-            //Auto login
+            // Load Auto Login state
             if (chkAutoLogin != null)
             {
                 chkAutoLogin.IsChecked = Do_An_LTTQ.Properties.Settings.Default.IsLoggedIn;
             }
-
-
         }
+
+        private void ChangeAvatar_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Image files (*.png;*.jpg;*.jpeg)|*.png;*.jpg;*.jpeg";
+
+            if (openFileDialog.ShowDialog() == true)
+            {
+                string sourceFile = openFileDialog.FileName;
+                imgAvatarBrush.ImageSource = new BitmapImage(new Uri(sourceFile));
+                _selectedAvatarPath = sourceFile;
+            }
+        }
+
+        // HÀM LƯU CHÍNH (Chỉ giữ lại 1 hàm này thôi)
+        private void SaveProfile(object sender, RoutedEventArgs e)
+        {
+            string newEmail = txtEmail.Text.Trim();
+            string finalAvatarPath = null;
+
+            try
+            {
+                // 1. Copy ảnh vào thư mục dự án (nếu có chọn ảnh mới)
+                if (_selectedAvatarPath != null)
+                {
+                    string destFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "UserAvatars");
+                    if (!Directory.Exists(destFolder)) Directory.CreateDirectory(destFolder);
+
+                    string fileName = $"Avatar_{App.CurrentUserID}_{DateTime.Now.Ticks}{Path.GetExtension(_selectedAvatarPath)}";
+                    string destPath = Path.Combine(destFolder, fileName);
+
+                    File.Copy(_selectedAvatarPath, destPath, true);
+                    finalAvatarPath = destPath;
+                }
+
+                // 2. Lưu vào Database
+                using (SqlConnection conn = new SqlConnection(_connectionString))
+                {
+                    conn.Open();
+                    // Dùng câu lệnh Update trực tiếp cho chắc chắn (vì SP của bạn có thể thiếu tham số Email)
+                    string query = "UPDATE USERS SET Email = @Email, AvatarURL = ISNULL(@AvatarURL, AvatarURL) WHERE UserID = @UserID";
+
+                    using (SqlCommand cmdUpdate = new SqlCommand(query, conn))
+                    {
+                        cmdUpdate.Parameters.AddWithValue("@Email", newEmail);
+                        cmdUpdate.Parameters.AddWithValue("@UserID", App.CurrentUserID);
+
+                        if (finalAvatarPath != null)
+                            cmdUpdate.Parameters.AddWithValue("@AvatarURL", finalAvatarPath);
+                        else
+                            cmdUpdate.Parameters.AddWithValue("@AvatarURL", DBNull.Value);
+
+                        cmdUpdate.ExecuteNonQuery();
+                    }
+                }
+
+                // 3. Cập nhật biến toàn cục để Dashboard hiển thị ngay
+                App.CurrentEmail = newEmail;
+                if (finalAvatarPath != null)
+                {
+                    App.CurrentAvatarURL = finalAvatarPath;
+                }
+
+                MessageBox.Show("Lưu thay đổi thành công!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi lưu: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
         private void ChangeTheme(object sender, RoutedEventArgs e)
-{
-    if (sender is Button btn && btn.Tag != null)
-    {
-        // 1. Lấy tên theme từ Tag của nút (VD: "Blue", "Light")
-        string theme = btn.Tag.ToString(); 
-
-        // 2. Cập nhật dòng chữ hiển thị "Current: ..."
-        if (txtCurrentTheme != null)
         {
-            txtCurrentTheme.Text = $"Current: {theme}";
-        }
+            if (sender is Button btn && btn.Tag != null)
+            {
+                string theme = btn.Tag.ToString();
+                if (txtCurrentTheme != null) txtCurrentTheme.Text = $"Current: {theme}";
 
-        // 3. XỬ LÝ ĐỔI FILE MÀU (Quan trọng)
-        string uriPath = $"Theme/{theme}.xaml"; // Lưu ý: Kiểm tra folder là "Theme" hay "Themes" trong dự án của bạn
-        try 
-        {
-            var newTheme = new ResourceDictionary 
-            { 
-                Source = new Uri(uriPath, UriKind.Relative) 
-            };
-
-            // Xóa theme cũ và thêm theme mới
-            var appResources = Application.Current.Resources.MergedDictionaries;
-            appResources.Clear(); // Xóa sạch các dictionary cũ
-            
-            // Nạp lại file từ điển chính (nếu có dùng icon hay style chung)
-            appResources.Add(new ResourceDictionary { Source = new Uri("/Resources/Dictionary.xaml", UriKind.Relative) });
-            
-            // Nạp theme mới vào
-            appResources.Add(newTheme);
-
-            // 4. Lưu lại tên theme để lần sau mở app nó nhớ
-            Application.Current.Resources["CurrentTheme"] = theme;
+                string uriPath = $"Theme/{theme}.xaml";
+                try
+                {
+                    var newTheme = new ResourceDictionary { Source = new Uri(uriPath, UriKind.Relative) };
+                    var appResources = Application.Current.Resources.MergedDictionaries;
+                    appResources.Clear();
+                    appResources.Add(new ResourceDictionary { Source = new Uri("/Resources/Dictionary.xaml", UriKind.Relative) });
+                    appResources.Add(newTheme);
+                    Application.Current.Resources["CurrentTheme"] = theme;
+                }
+                catch (Exception) { /* Bỏ qua lỗi theme nếu file chưa tồn tại */ }
+            }
         }
-        catch (Exception ex)
-        {
-            MessageBox.Show("Lỗi không tìm thấy file màu: " + uriPath);
-        }
-    }
-}
 
         private void RadioButton_Checked(object sender, RoutedEventArgs e)
         {
-            if (sender is RadioButton rb  && rb.Tag != null)
+            if (sender is RadioButton rb && rb.Tag != null)
             {
-                double baseSize = double .Parse(rb.Tag.ToString());
-                if (txtPreview != null)
+                if (double.TryParse(rb.Tag.ToString(), out double baseSize))
                 {
-                    txtPreview.FontSize = baseSize;
+                    if (txtPreview != null) txtPreview.FontSize = baseSize;
+                    Application.Current.Resources["FontSizeNormal"] = baseSize;
+                    Application.Current.Resources["FontSizeLarge"] = baseSize * 1.5;
+                    Application.Current.Resources["FontSizeHuge"] = baseSize * 2.0;
                 }
-
-                Application.Current.Resources["FontSizeNormal"] =baseSize;
-
-                Application.Current.Resources["FontSizeLarge"] = baseSize * 1.5;
-
-                Application.Current.Resources["FontSizeHuge"] = baseSize * 2.0;
             }
         }
 
         private void Language_Changed(object sender, RoutedEventArgs e)
         {
-            if (txtCurrentLanguage == null) return;
-            
-            if (sender is RadioButton rb)
+            if (txtCurrentLanguage != null && sender is RadioButton rb)
             {
                 txtCurrentLanguage.Text = $"Current: {rb.Content}";
             }
         }
 
-        private void SaveProfile(object sender, RoutedEventArgs e)
-        {
-            string newUsername = txtUsername.Text.Trim();
-            string newEmail = txtEmail.Text.Trim();
-            string newPhone = txtPhone.Text.Trim();
-            string username = txtUsername.Text;
-            string email = txtEmail.Text;
-            string phone = txtPhone.Text;
-
-            App.CurrentUsername = newUsername;
-            App.CurrentEmail = newEmail;
-
-            MessageBox.Show($"Profile saved!\n\nUsername: {username}\nEmail: {email}\nPhone: {phone}",
-                "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-        }
         private void ResetProfile(object sender, RoutedEventArgs e)
         {
-            var result = MessageBox.Show("Reset to default values?", "Confirm",
-                MessageBoxButton.YesNo, MessageBoxImage.Question);
-
-            if (result == MessageBoxResult.Yes)
+            if (MessageBox.Show("Reset về mặc định?", "Confirm", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
-                txtUsername.Text = "May1804";
-                txtEmail.Text = "may1804@example.com";
-                txtPhone.Text = "0123456789";
-                MessageBox.Show("Profile reset!", "Success");
+                txtEmail.Text = ""; // Hoặc giá trị mặc định nào đó
+                // Reset logic...
             }
         }
+
         private void Logout_Click(object sender, RoutedEventArgs e)
         {
-            // 1. Xóa thông tin lưu tạm trong App
             App.CurrentUsername = null;
             App.CurrentEmail = null;
+            App.CurrentAvatarURL = null;
 
-            // 2. Xóa trạng thái "Duy trì đăng nhập" (Xem phần 3 bên dưới để hiểu dòng này)
             Do_An_LTTQ.Properties.Settings.Default.IsLoggedIn = false;
             Do_An_LTTQ.Properties.Settings.Default.Save();
 
-            // 3. Mở lại màn hình Login
-            // Lưu ý: Đảm bảo bạn đã có class LoginWindow trong namespace Do_An_LTTQ.Login
-            LoginWindow loginWindow = new LoginWindow();
-            loginWindow.Show();
+            // Mở lại Login (đảm bảo bạn đã có LoginWindow)
+            // Do_An_LTTQ.Login.LoginWindow login = new Do_An_LTTQ.Login.LoginWindow(); 
+            // login.Show();
 
-            // 4. Đóng cửa sổ hiện tại (MainWindow)
             Window.GetWindow(this).Close();
         }
 
         private void chkAutoLogin_Click(object sender, RoutedEventArgs e)
         {
-            if (chkAutoLogin.IsChecked == true)
-            {
-                // Nếu tích vào -> Bật tính năng tự động đăng nhập
-                Do_An_LTTQ.Properties.Settings.Default.IsLoggedIn = true;
-                // Cập nhật lại tên người dùng hiện tại vào cài đặt để lần sau biết ai mà login
-                Do_An_LTTQ.Properties.Settings.Default.SavedUsername = App.CurrentUsername;
-            }
-            else
-            {
-                // Nếu bỏ tích -> Tắt tính năng (Lần sau mở app sẽ hỏi mật khẩu)
-                Do_An_LTTQ.Properties.Settings.Default.IsLoggedIn = false;
-                Do_An_LTTQ.Properties.Settings.Default.SavedUsername = "";
-            }
-
-            // Quan trọng: Lưu lại xuống ổ cứng
+            Do_An_LTTQ.Properties.Settings.Default.IsLoggedIn = chkAutoLogin.IsChecked == true;
+            Do_An_LTTQ.Properties.Settings.Default.SavedUsername = chkAutoLogin.IsChecked == true ? App.CurrentUsername : "";
             Do_An_LTTQ.Properties.Settings.Default.Save();
         }
     }

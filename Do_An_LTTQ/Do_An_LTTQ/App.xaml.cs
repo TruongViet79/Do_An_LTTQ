@@ -14,7 +14,7 @@ namespace Do_An_LTTQ
         public static string CurrentUsername { get; set; } = "";
         public static string CurrentEmail { get; set; } = "";
         public static int CurrentUserID { get; set; } = 0;
-
+        public static string CurrentAvatarURL { get; set; } = "";
         private void Application_Startup(object sender, StartupEventArgs e)
         {
             // 1. Kiểm tra xem lần trước có đăng nhập chưa
