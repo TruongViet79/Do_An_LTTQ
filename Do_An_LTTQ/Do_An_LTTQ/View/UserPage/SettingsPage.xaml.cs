@@ -184,17 +184,23 @@ namespace Do_An_LTTQ.View.UserPage
             App.CurrentEmail = null;
             App.CurrentAvatarURL = null;
 
-            Do_An_LTTQ.Properties.Settings.Default.IsLoggedIn = false;
-            Do_An_LTTQ.Properties.Settings.Default.Save();
+            Properties.Settings.Default.IsLoggedIn = false;
+            Properties.Settings.Default.Save();
 
             // Mở lại Login (đảm bảo bạn đã có LoginWindow)
             // Do_An_LTTQ.Login.LoginWindow login = new Do_An_LTTQ.Login.LoginWindow(); 
             // login.Show();
 
-            Window.GetWindow(this).Close();
             LoginWindow loginWindow = new LoginWindow();
             loginWindow.Show();
-            
+
+            // 4. Đóng cửa sổ hiện tại (MainWindow) SAU
+            Window currentWindow = Window.GetWindow(this);
+            if (currentWindow != null)
+            {
+                currentWindow.Close();
+            }
+
         }
 
         private void chkAutoLogin_Click(object sender, RoutedEventArgs e)

@@ -62,7 +62,17 @@
                     <Border Grid.Column="1" CornerRadius="8" Width="280" BorderThickness="8" BorderBrush="White" Height="40" HorizontalAlignment="Right" Margin="0,0,10,0">
                         <Grid Background="White" Margin="0,-8,0,-8">
                             <fa:ImageAwesome Icon="Search" Width="16" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10" Foreground="Gray"/>
-                            <TextBox Background="Transparent" BorderThickness="0" Padding="35,0,10,0" VerticalContentAlignment="Center" FontSize="13" Text="Search the Store..." Foreground="Gray"/>
+                            <TextBox x:Name="txtSearchStore" 
+                 Background="Transparent" 
+                 BorderThickness="0" 
+                 Padding="35,0,10,0" 
+                 VerticalContentAlignment="Center" 
+                 FontSize="13" 
+                 Text="Search the Store..." 
+                 Foreground="Gray"
+                 GotFocus="txtSearchStore_GotFocus"
+                 LostFocus="txtSearchStore_LostFocus"
+                 KeyUp="txtSearchStore_KeyUp"/>
                         </Grid>
                     </Border>
                 </Grid>
