@@ -31,34 +31,30 @@ namespace Do_An_LTTQ.Services
         {
             using (var context = new GameStoreDbContext())
             {
-                // 1. Lấy thông tin game (EF sẽ bỏ qua cột Categories nhờ [NotMapped])
+                // Sử dụng Find hoặc FirstOrDefault để lấy game
                 var game = context.Games.FirstOrDefault(g => g.GameID == gameId);
 
                 if (game != null)
                 {
-                    // 2. Truy vấn thủ công để lấy danh sách tên thể loại
-                    // Giả sử bảng danh mục tên là CATEGORY, cột tên là CategoryName
-                    // Bảng trung gian là GAMECATEGORY
                     try
                     {
-                        // Câu lệnh SQL lấy tên thể loại dựa trên GameID
+                        // Thay vì SqlQueryRaw, hãy dùng logic Linq nếu có thể để EF quản lý kết nối tốt hơn
                         string sql = @"
-                            SELECT c.CategoryName 
-                            FROM CATEGORIES c
-                            JOIN GAMECATEGORIES gc ON c.CategoryID = gc.CategoryID
-                            WHERE gc.GameID = {0}";
+                    SELECT c.CategoryName 
+                    FROM CATEGORIES c
+                    JOIN GAMECATEGORIES gc ON c.CategoryID = gc.CategoryID
+                    WHERE gc.GameID = {0}";
 
-                        // Chạy query lấy list tên
                         var catNames = context.Database
                                               .SqlQueryRaw<string>(sql, gameId)
                                               .ToList();
 
-                        // 3. Nối lại thành chuỗi (VD: "Action, RPG") để UI hiển thị được
-                        game.Categories = string.Join(", ", catNames);
+                        game.Categories = (catNames != null && catNames.Count > 0)
+                                          ? string.Join(", ", catNames)
+                                          : "";
                     }
-                    catch
+                    catch (Exception)
                     {
-                        // Nếu lỡ bảng tên khác thì nó ko chết app, chỉ trống category thôi
                         game.Categories = "";
                     }
                 }

@@ -73,16 +73,19 @@
             <Border Height="276" Margin="20"  CornerRadius="20" BorderThickness="2" BorderBrush="Lavender"
                     Background="Transparent" >
                 <StackPanel Height="283" VerticalAlignment="Top">
-                    <Rectangle Height="120" Margin="20">
+                    <Rectangle x:Name="rectLastGameImage" Height="136" Margin="20" Width="217">
                         <Rectangle.Fill>
-                            <ImageBrush ImageSource="/Resources/idle2.png" Stretch="UniformToFill"/>
+                            <ImageBrush x:Name="imgLastGame" 
+            ImageSource="pack://application:,,,/Do_An_LTTQ;component/Resources/idle2.png" 
+            Stretch="UniformToFill"/>
                         </Rectangle.Fill>
                     </Rectangle>
-                    <TextBlock Text="Last game played:" TextAlignment="Center" FontSize="20" FontWeight="Bold" Margin="5" FontFamily="Comic Sans MS" Foreground="{DynamicResource PrimaryText}"></TextBlock>
-                    <Button x:Name="btnPAgain" Style="{StaticResource IconTextButtonStyle}" Margin="5"
-                            Background="{DynamicResource AccentColor}">
+                    <TextBlock x:Name="txtStatusLabel" Text="" TextAlignment="Center" FontSize="16" FontWeight="Bold" FontFamily="Comic Sans MS" Foreground="{DynamicResource PrimaryText}"/>
+                    <TextBlock x:Name="txtGameTitleDisplay" Text="" TextAlignment="Center" FontSize="20" FontWeight="Bold" FontFamily="Comic Sans MS" Foreground="{DynamicResource PrimaryText}" TextTrimming="CharacterEllipsis"/>
+                    <Button x:Name="btnPAgain" Style="{StaticResource IconTextButtonStyle}"
+                            Background="{DynamicResource AccentColor}" Width="191" Height="45" >
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Play again?" FontSize="{DynamicResource FontSizeLarge}" Foreground="{DynamicResource PrimaryText}" Margin="10" FontFamily="Comic Sans MS" FontWeight="Bold" Width="150" TextAlignment="Center" Height="45"/>
+                            <TextBlock x:Name="txtButtonText" Text="No game played" FontSize="{DynamicResource FontSizeLarge}" Foreground="{DynamicResource PrimaryText}" FontFamily="Comic Sans MS" FontWeight="Bold" Width="154" TextAlignment="Center" Height="33"/>
                         </StackPanel>
                     </Button>
                 </StackPanel>

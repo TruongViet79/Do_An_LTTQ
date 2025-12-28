@@ -46,5 +46,17 @@ namespace Do_An_LTTQ.Properties {
                 this["SavedUsername"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int SavedUserID {
+            get {
+                return ((int)(this["SavedUserID"]));
+            }
+            set {
+                this["SavedUserID"] = value;
+            }
+        }
     }
 }

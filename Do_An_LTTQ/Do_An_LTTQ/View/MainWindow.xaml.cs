@@ -20,6 +20,7 @@ namespace Do_An_LTTQ.View
         {
             InitializeComponent();
             MainContent.Navigate(new UserPage.DashboardPage());
+            LoadLastPlayedGame();
         }
         private void btnSettings_Click(object sender, RoutedEventArgs e)
         {
@@ -44,5 +45,60 @@ namespace Do_An_LTTQ.View
             MainContent.Navigate(null);
             MainContent.Navigate(new UserPage.LibraryPage());
         }
+
+        public void UpdateLastPlayedGame(string title, string imagePath)
+        {
+            // 1. Hiện dòng chữ tiêu đề
+            txtStatusLabel.Text = "Last game played:";
+
+            // 2. Hiện tên game ngay bên dưới tiêu đề
+            txtGameTitleDisplay.Text = title;
+
+            // 3. Thay đổi text bên trong nút bấm thành "Play Again?"
+            txtButtonText.Text = "Play Again?";
+
+            // 4. Cập nhật hình ảnh
+            try
+            {
+                if (!string.IsNullOrEmpty(imagePath))
+                {
+                    imgLastGame.ImageSource = new BitmapImage(new Uri(imagePath, UriKind.RelativeOrAbsolute));
+                }
+            }
+            catch
+            {
+                // Lưu ý: Dùng đường dẫn "pack://..." để lấy ảnh trong Resource
+                imgLastGame.ImageSource = new BitmapImage(new Uri("pack://application:,,,/Do_An_LTTQ;component/Resources/idle2.png"));
+            }
+        }
+
+        private void LoadLastPlayedGame()
+        {
+            try
+            {
+                DatabaseManager dbManager = new DatabaseManager();
+                // Gọi Procedure vừa tạo ở Bước 1
+                System.Data.DataTable dt = dbManager.ExecuteQuery($"EXEC sp_GetLastPlayedGame @UserID = {App.CurrentUserID}");
+
+                if (dt != null && dt.Rows.Count > 0)
+                {
+                    string title = dt.Rows[0]["Title"].ToString();
+                    string imagePath = dt.Rows[0]["MainCoverImageURL"].ToString();
+
+                    // Gọi lại hàm Update mà chúng ta đã viết ở bước trước để hiển thị lên UI
+                    UpdateLastPlayedGame(title, imagePath);
+                }
+                else
+                {
+                    // Nếu chưa từng chơi game nào, giữ trạng thái mặc định
+                    txtStatusLabel.Text = "";
+                    txtGameTitleDisplay.Text = "";
+                    txtButtonText.Text = "No game played";
+                    imgLastGame.ImageSource = new BitmapImage(new Uri("pack://application:,,,/Do_An_LTTQ;component/Resources/idle2.png"));
+                }
+            }
+            catch { /* Tránh crash app nếu có lỗi DB */ }
+        }
+
     }
 }
