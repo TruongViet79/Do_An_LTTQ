@@ -15,9 +15,20 @@ namespace Do_An_LTTQ.Helpers
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            // Thay đổi Server Name cho khớp với máy của bạn
-            string connectionString = @"Server=.;Database=GameStoreDB;Trusted_Connection=True;TrustServerCertificate=True;";
-            optionsBuilder.UseSqlServer(connectionString);
+            // 1. Lấy chuỗi kết nối hiện tại
+            string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["GameStoreConn"].ConnectionString;
+
+            // 2. Thêm "TrustServerCertificate=True" vào cuối chuỗi nếu chưa có
+            if (!connectionString.Contains("TrustServerCertificate"))
+            {
+                connectionString += ";TrustServerCertificate=True";
+            }
+
+            // 3. Cấu hình UseSqlServer với chuỗi mới và EnableRetryOnFailure
+            optionsBuilder.UseSqlServer(connectionString, sqlServerOptions =>
+            {
+                sqlServerOptions.EnableRetryOnFailure();
+            });
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

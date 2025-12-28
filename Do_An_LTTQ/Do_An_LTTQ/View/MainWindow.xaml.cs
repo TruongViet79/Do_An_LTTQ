@@ -44,5 +44,31 @@ namespace Do_An_LTTQ.View
             MainContent.Navigate(null);
             MainContent.Navigate(new UserPage.LibraryPage());
         }
+
+        public void UpdateLastPlayedGame(string title, string imagePath)
+        {
+            // 1. Hiện dòng chữ tiêu đề
+            txtStatusLabel.Text = "Last game played:";
+
+            // 2. Hiện tên game ngay bên dưới tiêu đề
+            txtGameTitleDisplay.Text = title;
+
+            // 3. Thay đổi text bên trong nút bấm thành "Play Again?"
+            txtButtonText.Text = "Play Again?";
+
+            // 4. Cập nhật hình ảnh
+            try
+            {
+                if (!string.IsNullOrEmpty(imagePath))
+                {
+                    imgLastGame.ImageSource = new BitmapImage(new Uri(imagePath, UriKind.RelativeOrAbsolute));
+                }
+            }
+            catch
+            {
+                imgLastGame.ImageSource = new BitmapImage(new Uri("/Resources/idle2.png", UriKind.RelativeOrAbsolute));
+            }
+        }
+
     }
 }

@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Globalization;
 
 namespace Do_An_LTTQ.View.UserPage
 {
@@ -55,41 +56,56 @@ namespace Do_An_LTTQ.View.UserPage
 
         private void btnCheckout_Click(object sender, RoutedEventArgs e)
         {
-            if (CartSession.CartItems.Count == 0)
+            // 1. Kiểm tra giỏ hàng
+            if (CartSession.CartItems == null || CartSession.CartItems.Count == 0)
             {
-                MessageBox.Show("Giỏ hàng trống!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Giỏ hàng của bạn đang trống!", "Thông báo");
                 return;
             }
 
-            // Gọi OrderService để xử lý thanh toán
             OrderService orderService = new OrderService();
-
-            // Giả sử lấy UserID từ App (bạn cần đảm bảo App.CurrentUserID có giá trị)
-            // Nếu chưa có biến UserID toàn cục, bạn có thể tạm thời hardcode = 1 để test
-            int userId = 1; // Thay bằng: App.CurrentUserID;
+            DatabaseManager dbManager = new DatabaseManager();
+            int userId = App.CurrentUserID;
 
             try
             {
-                // 1. Tạo Order mới
-                // Lưu ý: Hàm CreateOrder trong OrderService của bạn hiện trả về 1 (hardcode). 
-                // Bạn cần sửa OrderService để trả về SCOPE_IDENTITY() (OrderID thật) từ SQL.
+                // 2. Tạo đơn hàng duy nhất và lấy ID
                 int orderId = orderService.CreateOrder(userId, "CreditCard");
 
-                // 2. Thêm từng game vào OrderDetails
-                foreach (var game in CartSession.CartItems)
+                // 3. Sử dụng vòng lặp ToList() để tránh lỗi sửa đổi danh sách khi đang duyệt
+                var itemsToProcess = CartSession.CartItems.ToList();
+
+                foreach (var game in itemsToProcess)
                 {
+                    // 1. Thêm vào chi tiết đơn hàng
                     orderService.AddGameToOrder(orderId, game.GameID);
+
+                    // 2. GIẢI PHÁP MỚI: Truyền giá tiền dưới dạng chuỗi và để SQL tự xử lý dấu phẩy
+                    // Cách này giúp tránh hoàn toàn việc SQL hiểu nhầm dấu phẩy là dấu ngăn cách cột
+                    string rawPrice = game.FinalPrice.ToString(); // Lấy giá trị mặc định (có thể là 150000,00)
+
+                    string sqlInsertLibrary = $@"
+                        INSERT INTO USERLIBRARIES (UserID, GameID, PurchasePrice, OrderID, IsFavorite)
+                        VALUES (
+                            {userId}, 
+                            {game.GameID}, 
+                           REPLACE('{rawPrice}', ',', '.'), -- Ép dấu phẩy thành dấu chấm ngay trong SQL
+                            {orderId}, 
+                            0
+                            )";
+
+                    dbManager.ExecuteQuery(sqlInsertLibrary);
                 }
 
-                MessageBox.Show("Thanh toán thành công! Cảm ơn bạn đã mua hàng.", "Thành công", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("Thanh toán thành công! Trò chơi đã được thêm vào Thư viện.", "Thành công");
 
-                // Xóa giỏ hàng và quay về Dashboard
+                // 7. Dọn dẹp giỏ hàng và chuyển trang
                 CartSession.ClearCart();
-                NavigationService.Navigate(new DashboardPage());
+                NavigationService.Navigate(new LibraryPage());
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
-                MessageBox.Show("Lỗi thanh toán: " + ex.Message);
+                MessageBox.Show("Lỗi thực thi: " + ex.Message);
             }
         }
     }

@@ -42,7 +42,7 @@ namespace Do_An_LTTQ.View.UserPage
             set { _featuredGame = value; }
         }
         DatabaseManager db = new DatabaseManager(); // Khởi tạo đối tượng quản lý DB
-
+        private readonly DatabaseManager _dbManager = new DatabaseManager();
         public StorePage()
         {
             InitializeComponent();
@@ -54,7 +54,8 @@ namespace Do_An_LTTQ.View.UserPage
         {
             try
             {
-                DataTable dt = db.ExecuteQuery("EXEC sp_GetAllGamesForDisplay");
+                int currentUserId = 1;
+                DataTable dt = _dbManager.ExecuteQuery($"EXEC sp_GetAllGamesForDisplay @UserID = 1");
                 ClearCollections();
 
                 // Bước 1: Dùng Dictionary để "ép" dữ liệu SẠCH ngay từ DataTable
@@ -121,27 +122,9 @@ namespace Do_An_LTTQ.View.UserPage
 
         private void GameBorder_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            // Lấy đối tượng Border đã được click
-            if (sender is Border clickedBorder)
+            if (sender is FrameworkElement element && element.DataContext is Game selectedGame)
             {
-                // Lấy ID từ thuộc tính Tag mà ta đã gán ở XAML
-                if (int.TryParse(clickedBorder.Tag.ToString(), out int gameId))
-                {
-                    // CÁCH 1: Nếu bạn đã có hàm GetGameById trong Service
-                    // Game selectedGame = _gameService.GetGameById(gameId);
-
-                    // CÁCH 2: (Tạm thời) Tạo đối tượng Game giả lập nếu chưa có DB hoàn chỉnh
-                    // Vì GameDetailPage nhận vào một đối tượng Game
-                    Game selectedGame = new Game()
-                    {
-                        GameID = gameId,
-                        // Các thông tin khác có thể để Service bên trang Detail tự load lại 
-                        // dựa trên ID, như logic bạn đã viết bên GameDetailPage.xaml.cs
-                    };
-
-                    // Thực hiện chuyển trang và truyền object game qua
-                    NavigationService.Navigate(new GameDetailPage(selectedGame));
-                }
+                NavigationService.Navigate(new GameDetailPage(selectedGame));
             }
         }
 
