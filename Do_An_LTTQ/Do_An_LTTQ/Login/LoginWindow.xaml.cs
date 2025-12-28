@@ -85,11 +85,11 @@ namespace Do_An_LTTQ
 
         private void SignupButton_Click(object sender, RoutedEventArgs e)
         {
-            // Mở form đăng ký (Đảm bảo bạn có file SignupWindow)
-            // SignupWindow signup = new SignupWindow();
-            // signup.Show();
-            // this.Close();
-            MessageBox.Show("Chức năng đang phát triển");
+            
+            SignupWindow signup = new SignupWindow();
+            signup.Show();
+            this.Close();
+           
         }
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)

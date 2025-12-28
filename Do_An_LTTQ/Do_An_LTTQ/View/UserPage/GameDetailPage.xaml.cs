@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
+using System.Diagnostics;
 
 namespace Do_An_LTTQ.View.UserPage
 {
