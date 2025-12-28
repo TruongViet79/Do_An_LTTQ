@@ -24,10 +24,14 @@
                             <fa:ImageAwesome Icon="Search" Width="20" Height="20"
                                      VerticalAlignment="Center" HorizontalAlignment="Left"
                                      Margin="10" Foreground="Gray"/>
-                            <TextBox Background="Transparent" BorderThickness="0" Padding="35,0,5,0" VerticalContentAlignment="Center"
-                                 FontSize="{DynamicResource FontSizeNormal}"
-                                 Text="Search game"
-                                 Foreground="Gray" HorizontalAlignment="Center" Width="310"/>
+                            <TextBox x:Name="txtDashboardSearch" 
+                                     Background="Transparent" BorderThickness="0" Padding="35,0,5,0" 
+                                     VerticalContentAlignment="Center"
+                                     FontSize="{DynamicResource FontSizeNormal}"
+                                     Foreground="Black" HorizontalAlignment="Center" Width="310"
+                                     GotFocus="txtDashboardSearch_GotFocus"
+                                     LostFocus="txtDashboardSearch_LostFocus"
+                                     KeyUp="txtDashboardSearch_KeyUp"/>
                         </Grid>
                     </Border>
 
