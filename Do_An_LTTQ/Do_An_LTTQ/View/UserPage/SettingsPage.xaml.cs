@@ -73,7 +73,7 @@ namespace Do_An_LTTQ.View.UserPage
         private void SaveProfile(object sender, RoutedEventArgs e)
         {
             string newEmail = txtEmail.Text.Trim();
-            string finalAvatarPath = _selectedAvatarPath;
+            string finalAvatarPath = null;
 
             try
             {
@@ -95,18 +95,19 @@ namespace Do_An_LTTQ.View.UserPage
                 {
                     conn.Open();
                     // Dùng câu lệnh Update trực tiếp cho chắc chắn (vì SP của bạn có thể thiếu tham số Email)
-                    using (SqlCommand cmd = new SqlCommand("sp_UpdateUserProfile", conn))
+                    string query = "UPDATE USERS SET Email = @Email, AvatarURL = ISNULL(@AvatarURL, AvatarURL) WHERE UserID = @UserID";
+
+                    using (SqlCommand cmdUpdate = new SqlCommand(query, conn))
                     {
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Parameters.AddWithValue("@UserID", App.CurrentUserID);
-                        cmd.Parameters.AddWithValue("@Email", newEmail);
+                        cmdUpdate.Parameters.AddWithValue("@Email", newEmail);
+                        cmdUpdate.Parameters.AddWithValue("@UserID", App.CurrentUserID);
 
-                        if (!string.IsNullOrEmpty(finalAvatarPath))
-                            cmd.Parameters.AddWithValue("@AvatarURL", finalAvatarPath);
+                        if (finalAvatarPath != null)
+                            cmdUpdate.Parameters.AddWithValue("@AvatarURL", finalAvatarPath);
                         else
-                            cmd.Parameters.AddWithValue("@AvatarURL", DBNull.Value);
+                            cmdUpdate.Parameters.AddWithValue("@AvatarURL", DBNull.Value);
 
-                        cmd.ExecuteNonQuery();
+                        cmdUpdate.ExecuteNonQuery();
                     }
                 }
 

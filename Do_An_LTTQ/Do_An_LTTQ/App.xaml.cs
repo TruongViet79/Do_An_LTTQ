@@ -16,7 +16,7 @@ namespace Do_An_LTTQ
         public static string CurrentEmail { get; set; } = "";
         public static int CurrentUserID { get; set; } = 0;
         public static string CurrentAvatarURL { get; set; } = "";
-        private string _connectionString = "Data Source=.;Initial Catalog=GameStoreDB;Integrated Security=True";
+        private string _connectionString = "Data Source=LAPTOP-H457D0PI\\MSSQLSERVER01;Initial Catalog=GameStoreDB;Integrated Security=True";
         private void Application_Startup(object sender, StartupEventArgs e)
         {
             // 1. Kiểm tra xem lần trước có đăng nhập chưa
