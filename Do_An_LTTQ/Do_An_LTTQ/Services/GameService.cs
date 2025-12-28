@@ -44,7 +44,7 @@ namespace Do_An_LTTQ.Services
                         // Câu lệnh SQL lấy tên thể loại dựa trên GameID
                         string sql = @"
                             SELECT c.CategoryName 
-                            FROM CATEGORY c
+                            FROM CATEGORIES c
                             JOIN GAMECATEGORIES gc ON c.CategoryID = gc.CategoryID
                             WHERE gc.GameID = {0}";
 

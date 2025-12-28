@@ -68,7 +68,7 @@
                 </Grid>
 
                 <Border Grid.Row="1" CornerRadius="15" Background="White">
-                    <TabControl TabStripPlacement="Left" BorderThickness="0" Background="Transparent">
+                    <TabControl x:Name="MainStoreTabControl" TabStripPlacement="Left" BorderThickness="0" Background="Transparent">
                         <TabItem Style="{StaticResource StoreTabControlStyle}" IsEnabled="False" IsHitTestVisible="False">
                             <TabItem.Header>
                                 <StackPanel>
@@ -98,7 +98,7 @@
                                                 <TextBlock Text="{Binding Title}" FontSize="20" FontWeight="ExtraBold" Foreground="White" FontFamily="Comic Sans MS"/>
                                                 <Grid>
                                                     <TextBlock Text="{Binding BasePrice, StringFormat='Price: {0:N0} VNĐ'}" FontSize="16" FontWeight="Bold" Foreground="#A1CD4C" VerticalAlignment="Center"/>
-                                                    <Button Content="BUY NOW" Background="DeepPink" Foreground="White" HorizontalAlignment="Right" Padding="15,5"/>
+                                                    <Button Content="BUY NOW" Click="BtnBuyNow_Click" Background="DeepPink" Foreground="White" HorizontalAlignment="Right" Padding="15,5"/>
                                                 </Grid>
                                             </StackPanel>
                                         </Grid>
@@ -191,7 +191,7 @@
                             </TabItem.Header>
                         </TabItem>
 
-                        <TabItem Style="{StaticResource StoreTabControlStyle}">
+                        <TabItem Style="{StaticResource StoreTabControlStyle}" Height="40" VerticalAlignment="Bottom">
                             <TabItem.Header>
                                 <TextBlock Text="Action" FontSize="14"/>
                             </TabItem.Header>

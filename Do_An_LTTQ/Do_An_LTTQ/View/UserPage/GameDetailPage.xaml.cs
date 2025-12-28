@@ -36,5 +36,14 @@ namespace Do_An_LTTQ.View.UserPage
                 MessageBox.Show($"Đã thêm {_currentGame.Title} vào giỏ hàng!", "Thành công", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
+
+        private void CategoryButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button btn && btn.Content is string categoryName)
+            {
+                // Điều hướng sang StorePage và gửi kèm tên thể loại (VD: "Action")
+                NavigationService.Navigate(new StorePage(categoryName));
+            }
+        }
     }
 }
