@@ -58,6 +58,9 @@ namespace Do_An_LTTQ.View.UserPage
         {
             try
             {
+                int userId = App.CurrentUserID;
+                string query = $"EXEC sp_SearchGames @UserID = {userId}";
+                DataTable dt = _dbManager.ExecuteQuery(query);
                 // 1. Lấy dữ liệu từ Database
                 DataTable dtGames = _dbManager.GetDashboardGames();
 
