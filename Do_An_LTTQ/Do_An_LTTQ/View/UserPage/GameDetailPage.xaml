@@ -186,15 +186,7 @@
                             </StackPanel>
                         </Border>
 
-                        <Border Style="{StaticResource CardStyle}">
-                            <StackPanel>
-                                <TextBlock Text="Official Website" Style="{StaticResource TitleStyle}"/>
-                                <Button Background="Transparent" BorderThickness="0" Cursor="Hand" HorizontalAlignment="Left" Padding="0"
-                                    >
-                                    <TextBlock Text="{Binding WebsiteURL}" FontSize="12" Foreground="#9C27B0" TextDecorations="Underline"/>
-                                </Button>
-                            </StackPanel>
-                        </Border>
+                        
                     </StackPanel>
 
                     <StackPanel Grid.Column="2">
