@@ -109,5 +109,35 @@ namespace Do_An_LTTQ.View.UserPage
                 NavigationService.Navigate(new GameDetailPage(selectedGame));
             }
         }
+        private void txtDashboardSearch_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                string keyword = txtDashboardSearch.Text.Trim();
+                if (!string.IsNullOrEmpty(keyword) && keyword != "Search game")
+                {
+                    // Truyền true để báo hiệu đây là hành động SEARCH
+                    NavigationService.Navigate(new StorePage(keyword, true));
+                }
+            }
+        }
+
+        private void txtDashboardSearch_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (txtDashboardSearch.Text == "Search game")
+            {
+                txtDashboardSearch.Text = "";
+                txtDashboardSearch.Foreground = Brushes.Black;
+            }
+        }
+
+        private void txtDashboardSearch_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtDashboardSearch.Text))
+            {
+                txtDashboardSearch.Text = "Search game";
+                txtDashboardSearch.Foreground = Brushes.Gray;
+            }
+        }
     }
 }

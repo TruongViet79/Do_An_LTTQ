@@ -49,7 +49,84 @@ namespace Do_An_LTTQ.View.UserPage
             LoadStoreData();
             this.DataContext = this;
         }
+        public StorePage(string input, bool isSearch = false) : this()
+        {
+            if (string.IsNullOrEmpty(input)) return;
 
+            if (isSearch)
+            {
+                // Xử lý tìm kiếm
+                txtSearchStore.Text = input;
+                txtSearchStore.Foreground = Brushes.Black; // Đổi màu chữ vì không còn là placeholder
+                FilterGamesFromDatabase(input);
+            }
+            else
+            {
+                // Xử lý chọn Category (dành cho constructor category cũ)
+                SelectCategoryTab(input);
+            }
+        }
+        private void txtSearchStore_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (txtSearchStore.Text == "Search the Store...")
+            {
+                txtSearchStore.Text = "";
+                txtSearchStore.Foreground = Brushes.Black;
+            }
+        }
+        private void txtSearchStore_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtSearchStore.Text))
+            {
+                txtSearchStore.Text = "Search the Store...";
+                txtSearchStore.Foreground = Brushes.Gray;
+            }
+        }
+        private void txtSearchStore_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                string keyword = txtSearchStore.Text.Trim();
+                if (!string.IsNullOrEmpty(keyword) && keyword != "Search the Store...")
+                {
+                    FilterGamesFromDatabase(keyword);
+                }
+            }
+        }
+
+        private void FilterGamesFromDatabase(string keyword)
+        {
+            try
+            {
+                // 1. Lấy dữ liệu từ Database dựa trên từ khóa
+                string sql = $"SELECT * FROM GAMES WHERE Title LIKE N'%{keyword}%'";
+                DataTable dt = _dbManager.ExecuteQuery(sql);
+
+                // 2. Xóa danh sách cũ
+                AllGames.Clear();
+
+                // 3. Đổ dữ liệu tìm kiếm mới vào
+                foreach (DataRow row in dt.Rows)
+                {
+                    AllGames.Add(new Game
+                    {
+                        GameID = Convert.ToInt32(row["GameID"]),
+                        Title = row["Title"].ToString(),
+                        BasePrice = Convert.ToDecimal(row["BasePrice"]),
+                        MainCoverImageURL = row["MainCoverImageURL"].ToString(),
+                        // Thêm các thuộc tính khác nếu cần
+                    });
+                }
+
+                // 4. CHUYỂN TAB sang "All Games" (TabIndex = 4 dựa trên XAML của bạn)
+                // Lưu ý: Kiểm tra lại chính xác Index của tab "All Games" trong TabControl
+                MainStoreTabControl.SelectedIndex = 4;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi tìm kiếm: " + ex.Message);
+            }
+        }
         private void LoadStoreData()
         {
             try
