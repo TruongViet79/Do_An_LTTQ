@@ -423,6 +423,12 @@
         </Style.Triggers>
     </Style>
 
-   
-   
+    <SolidColorBrush x:Key="AppBackground" Color="#F3F4F6"/>
+    <SolidColorBrush x:Key="CardBackground" Color="White"/>
+    <SolidColorBrush x:Key="SidebarBackground" Color="#E6E6FA"/>
+    <SolidColorBrush x:Key="AccentColor" Color="#9C27B0"/>
+    <SolidColorBrush x:Key="HighlightColor" Color="#E91E63"/>
+    <SolidColorBrush x:Key="PrimaryText" Color="#4B5563"/>
+    <SolidColorBrush x:Key="HeaderText" Color="#9C27B0"/>
+
 </ResourceDictionary>

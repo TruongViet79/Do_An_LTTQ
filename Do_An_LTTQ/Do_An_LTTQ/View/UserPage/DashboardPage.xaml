@@ -9,38 +9,88 @@
       d:DesignHeight="540" d:DesignWidth="995"
       Title="DashboardPage">
 
+    <Page.Resources>
+        <SolidColorBrush x:Key="AppBackground" Color="#F3F4F6"/>
+        <SolidColorBrush x:Key="CardBackground" Color="White"/>
+        <SolidColorBrush x:Key="SidebarBackground" Color="#E6E6FA"/>
+        <SolidColorBrush x:Key="AccentColor" Color="#9C27B0"/>
+        <SolidColorBrush x:Key="HighlightColor" Color="#E91E63"/>
+        <SolidColorBrush x:Key="PrimaryText" Color="#4B5563"/>
+        <SolidColorBrush x:Key="HeaderText" Color="#9C27B0"/>
+
+        <Style x:Key="FriendNameStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="{StaticResource PrimaryText}"/>
+        </Style>
+        <Style x:Key="FriendStatusStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Foreground" Value="#10B981"/>
+        </Style>
+        <Style x:Key="FriendItemStyle" TargetType="Border">
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="Margin" Value="0,5"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#F3F4F6"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="GameImageRectangleStyle" TargetType="Rectangle">
+            <Setter Property="Width" Value="200"/>
+            <Setter Property="Height" Value="120"/>
+            <Setter Property="Margin" Value="0,0,0,5"/>
+            <Setter Property="RadiusX" Value="8"/>
+            <Setter Property="RadiusY" Value="8"/>
+        </Style>
+        <Style x:Key="GameNameTextStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="{StaticResource PrimaryText}"/>
+            <Setter Property="TextAlignment" Value="Left"/>
+            <Setter Property="Width" Value="200"/>
+            <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
+        </Style>
+
+    </Page.Resources>
+
     <Grid>
-        <Border Margin="20" Grid.Column="1" Grid.RowSpan="3" Grid.ColumnSpan="2" CornerRadius="30" BorderThickness="0" BorderBrush="Black" Background="{DynamicResource AppBackground}">
+        <Border Margin="20" Grid.Column="1" Grid.RowSpan="3" Grid.ColumnSpan="2" CornerRadius="30" BorderThickness="0" BorderBrush="Black" Background="#F3E5F5">
             <StackPanel Orientation="Vertical">
 
                 <StackPanel Orientation="Horizontal" Height="117">
+
                     <StackPanel Orientation="Vertical" Margin="15" Width="200">
-                        <TextBlock Text="Welcome" Margin="10" FontSize="{DynamicResource FontSizeLarge}" Foreground="{DynamicResource PrimaryText}" VerticalAlignment="Center" TextAlignment="Center" FontFamily="Comic Sans MS"></TextBlock>
-                        <TextBlock x:Name="txtDisplayUsername" FontWeight="Bold" FontSize="{DynamicResource FontSizeHuge}" Foreground="{DynamicResource HeaderText}" VerticalAlignment="Center" TextAlignment="Center" FontFamily="Comic Sans MS"></TextBlock>
+                        <TextBlock Text="Welcome" Margin="10,0,10,0" FontSize="18" Foreground="{StaticResource PrimaryText}" VerticalAlignment="Center" TextAlignment="Center" FontFamily="Comic Sans MS"/>
+                        <TextBlock x:Name="txtDisplayUsername" FontWeight="Bold" FontSize="28" Foreground="{StaticResource HeaderText}" VerticalAlignment="Center" TextAlignment="Center" FontFamily="Comic Sans MS"/>
                     </StackPanel>
 
-                    <Border CornerRadius="8" BorderBrush="{DynamicResource CardBackground}" Width="400" BorderThickness="10" Margin="10" Height="50">
-                        <Grid Background="{DynamicResource CardBackground}" Margin="0,-10,0,-10">
+                    <Border BorderBrush="#E5E7EB" Width="400" BorderThickness="1" Margin="10" Height="50" Background="{StaticResource CardBackground}" CornerRadius="20">
+                        <Grid Margin="0,0,0,0">
                             <fa:ImageAwesome Icon="Search" Width="20" Height="20"
-                                     VerticalAlignment="Center" HorizontalAlignment="Left"
-                                     Margin="10" Foreground="Gray"/>
+                                            VerticalAlignment="Center" HorizontalAlignment="Left"
+                                            Margin="10" Foreground="{StaticResource AccentColor}"/>
                             <TextBox x:Name="txtDashboardSearch" 
-                                     Background="Transparent" BorderThickness="0" Padding="35,0,5,0" 
-                                     VerticalContentAlignment="Center"
-                                     FontSize="{DynamicResource FontSizeNormal}"
-                                     Foreground="Black" HorizontalAlignment="Center" Width="310"
-                                     GotFocus="txtDashboardSearch_GotFocus"
-                                     LostFocus="txtDashboardSearch_LostFocus"
-                                     KeyUp="txtDashboardSearch_KeyUp"/>
+                                            Background="Transparent" BorderThickness="0" Padding="35,0,5,0" 
+                                            VerticalContentAlignment="Center"
+                                            FontSize="14"
+                                            Foreground="{StaticResource PrimaryText}" HorizontalAlignment="Center" Width="310"
+                                            GotFocus="txtDashboardSearch_GotFocus"
+                                            LostFocus="txtDashboardSearch_LostFocus"
+                                            KeyUp="txtDashboardSearch_KeyUp"/>
                         </Grid>
                     </Border>
 
-                    <StackPanel Orientation="Horizontal">
+                    <StackPanel Orientation="Horizontal" Margin="15">
                         <Button x:Name="btnAddFr" Background="Transparent" Style="{StaticResource RoundButtonStyle}" Margin="20">
-                            <fa:ImageAwesome Icon="UserPlus" Width="50" Height="50"/>
+                            <fa:ImageAwesome Icon="UserPlus" Width="50" Height="50" Foreground="{StaticResource AccentColor}"/>
                         </Button>
                         <Button x:Name="btnCart" Click="btnCart_Click" Background="Transparent" Style="{StaticResource RoundButtonStyle}" Margin="20">
-                            <fa:ImageAwesome Icon="ShoppingBasket" Width="50" Height="50"/>
+                            <fa:ImageAwesome Icon="ShoppingBasket" Width="50" Height="50" Foreground="{StaticResource HighlightColor}"/>
                         </Button>
                         <Button Margin="20" Background="Transparent" BorderThickness="0" Style="{StaticResource RoundButtonStyle}" Click="ButtonProfile_Click">
                             <Ellipse Width="50" Height="50">
@@ -51,8 +101,9 @@
                         </Button>
                     </StackPanel>
                 </StackPanel>
-
-                <Grid Background="{DynamicResource CardBackground}" Height="520" Width="950">
+                <Border BorderBrush="Lavender" CornerRadius="20" BorderThickness="2"
+                        Background="{StaticResource CardBackground}" Height="520" Width="950">
+                    <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="3*"></ColumnDefinition>
                         <ColumnDefinition Width="3*"></ColumnDefinition>
@@ -67,8 +118,11 @@
                     </Grid.RowDefinitions>
 
                     <TextBlock Grid.Row="0" Text="Popular Free Games:" Margin="10"
-                                TextAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" FontSize="{DynamicResource FontSizeLarge}"></TextBlock>
-                    <Button x:Name="btnFGame" Grid.Column="2" Grid.Row="0" Content="View all..." Style="{StaticResource IconTextButtonStyle}" Background="Transparent" FontSize="{DynamicResource FontSizeLarge}"/>
+                                TextAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" 
+                                FontSize="18" Foreground="{StaticResource HeaderText}"/>
+                    <Button x:Name="btnFGame" Grid.Column="2" Grid.Row="0" Content="View all..." 
+                            Style="{StaticResource IconTextButtonStyle}" Background="Transparent" 
+                            FontSize="18" Foreground="{StaticResource AccentColor}" HorizontalAlignment="Right"/>
 
                     <ScrollViewer Grid.Row="1" Grid.ColumnSpan="3" VerticalAlignment="Top"
                                   HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" Margin="0,0,10,0">
@@ -87,7 +141,7 @@
                                                     <ImageBrush ImageSource="{Binding MainCoverImageURL}" Stretch="UniformToFill"/>
                                                 </Rectangle.Fill>
                                             </Rectangle>
-                                            <TextBlock Text="{Binding Title}" Style="{StaticResource GameNameTextStyle}"/>
+                                            <TextBlock Text="{Binding Title}" Style="{StaticResource GameNameTextStyle}" Foreground="{StaticResource PrimaryText}"/>
                                         </StackPanel>
                                     </Button>
                                 </DataTemplate>
@@ -96,8 +150,11 @@
                     </ScrollViewer>
 
                     <TextBlock Grid.Row="2" Text="Popular Paid Game:" Margin="10"
-                                TextAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" FontSize="{DynamicResource FontSizeLarge}"></TextBlock>
-                    <Button x:Name="btnPGame" Grid.Column="2" Grid.Row="2" Content="View all..." Style="{StaticResource IconTextButtonStyle}" Background="Transparent" FontSize="{DynamicResource FontSizeLarge}"/>
+                                TextAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" 
+                                FontSize="18" Foreground="{StaticResource HeaderText}"/>
+                    <Button x:Name="btnPGame" Grid.Column="2" Grid.Row="2" Content="View all..." 
+                            Style="{StaticResource IconTextButtonStyle}" Background="Transparent" 
+                            FontSize="18" Foreground="{StaticResource AccentColor}" HorizontalAlignment="Right"/>
 
                     <ScrollViewer Grid.Row="3" Grid.ColumnSpan="3" VerticalAlignment="Center"
                                   HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" Margin="0,0,10,0">
@@ -116,10 +173,10 @@
                                                     <ImageBrush ImageSource="{Binding MainCoverImageURL}" Stretch="UniformToFill"/>
                                                 </Rectangle.Fill>
                                             </Rectangle>
-                                            <TextBlock Text="{Binding Title}" Style="{StaticResource GameNameTextStyle}"/>
+                                            <TextBlock Text="{Binding Title}" Style="{StaticResource GameNameTextStyle}" Foreground="{StaticResource PrimaryText}"/>
                                             <TextBlock Text="{Binding FinalPrice, StringFormat={}{0:N0} VNĐ}"
-                                                       Style="{StaticResource GameNameTextStyle}"
-                                                       Foreground="OrangeRed" FontSize="12"/>
+                                                     Style="{StaticResource GameNameTextStyle}"
+                                                     Foreground="{StaticResource HighlightColor}" FontSize="12"/>
                                         </StackPanel>
                                     </Button>
                                 </DataTemplate>
@@ -128,13 +185,15 @@
                     </ScrollViewer>
 
                     <Border x:Name="FriendList" Grid.Row="0" Grid.Column="2" Grid.RowSpan="4" Grid.ColumnSpan="2"
-                        Width="100" BorderBrush="Gray" BorderThickness="1" CornerRadius="20" Height="500" Background="{DynamicResource CardBackground}"
-                        HorizontalAlignment="Right"
-                        MouseEnter="FriendList_MouseEnter"
-                        MouseLeave="FriendList_MouseLeave">
+                            Width="100" BorderBrush="#E5E7EB" BorderThickness="1" CornerRadius="20" Height="500" 
+                            Background="{StaticResource SidebarBackground}"
+                            HorizontalAlignment="Right"
+                            MouseEnter="FriendList_MouseEnter"
+                            MouseLeave="FriendList_MouseLeave">
 
                         <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Background="Transparent">
                             <StackPanel Orientation="Vertical" HorizontalAlignment="Left">
+
                                 <Border Style="{StaticResource FriendItemStyle}">
                                     <StackPanel Orientation="Horizontal">
                                         <Ellipse Width="60" Height="60">
@@ -143,11 +202,12 @@
                                             </Ellipse.Fill>
                                         </Ellipse>
                                         <StackPanel VerticalAlignment="Center" Margin="10,0,0,0">
-                                            <TextBlock Text="Player Name" Style="{StaticResource FriendNameStyle}"/>
-                                            <TextBlock Text="Online" Style="{StaticResource FriendStatusStyle}"/>
+                                            <TextBlock Text="Player Name" Style="{StaticResource FriendNameStyle}" Foreground="{StaticResource PrimaryText}"/>
+                                            <TextBlock Text="Online" Style="{StaticResource FriendStatusStyle}" Foreground="#10B981"/>
                                         </StackPanel>
                                     </StackPanel>
                                 </Border>
+
                                 <Border Style="{StaticResource FriendItemStyle}">
                                     <StackPanel Orientation="Horizontal">
                                         <Ellipse Width="60" Height="60">
@@ -156,17 +216,18 @@
                                             </Ellipse.Fill>
                                         </Ellipse>
                                         <StackPanel VerticalAlignment="Center" Margin="10,0,0,0">
-                                            <TextBlock Text="Friend Test" Style="{StaticResource FriendNameStyle}"/>
-                                            <TextBlock Text="Offline" Style="{StaticResource FriendStatusStyle}"/>
+                                            <TextBlock Text="Friend Test" Style="{StaticResource FriendNameStyle}" Foreground="{StaticResource PrimaryText}"/>
+                                            <TextBlock Text="Offline" Style="{StaticResource FriendStatusStyle}" Foreground="#999999"/>
                                         </StackPanel>
                                     </StackPanel>
                                 </Border>
+
                             </StackPanel>
                         </ScrollViewer>
                     </Border>
                 </Grid>
+                </Border>
             </StackPanel>
         </Border>
     </Grid>
-
 </Page>

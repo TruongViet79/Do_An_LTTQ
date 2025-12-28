@@ -89,6 +89,11 @@ namespace Do_An_LTTQ
                 // Nếu lỗi kết nối thì thôi, chấp nhận dùng mặc định
             }
         }
+
+        private void Application_Startup_1(object sender, StartupEventArgs e)
+        {
+
+        }
     }
 
 

@@ -44,7 +44,7 @@
     </Page.Resources>
 
     <Grid Background="White">
-        <Border Margin="20" CornerRadius="30" BorderThickness="0" Background="Lavender">
+        <Border Margin="20" CornerRadius="30" BorderThickness="0" Background="#F3E5F5">
             <Grid Margin="20">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="70"/>
