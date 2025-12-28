@@ -14,6 +14,8 @@ namespace Do_An_LTTQ.Models
         public int GameID { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
+        public int? DeveloperID { get; set; } 
+        public int? PublisherID { get; set; }
         public decimal BasePrice { get; set; }
         public decimal? FinalPrice { get; set; }
         public string MainCoverImageURL { get; set; }

@@ -11,6 +11,8 @@ namespace Do_An_LTTQ.Helpers
     public class GameStoreDbContext : DbContext
     {
         public DbSet<Game> Games { get; set; }
+        public DbSet<Developer> Developers { get; set; }
+        public DbSet<Publisher> Publishers { get; set; }
         // Thêm DbSet cho các bảng khác (Users, Categories...) tại đây
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -35,6 +37,8 @@ namespace Do_An_LTTQ.Helpers
         {
             modelBuilder.Entity<Game>().ToTable("GAMES");
             modelBuilder.Entity<User>().ToTable("USERS"); // Account là class bạn đổi tên để tránh trùng
+            modelBuilder.Entity<Developer>().ToTable("DEVELOPERS");
+            modelBuilder.Entity<Publisher>().ToTable("PUBLISHERS");
         }
     }
 }
