@@ -14,7 +14,7 @@ namespace Do_An_LTTQ.View.UserPage
     {
         private string _selectedAvatarPath = null;
         // LƯU Ý: Thay đổi chuỗi kết nối này cho đúng với máy của bạn
-        private string _connectionString = "Data Source=.;Initial Catalog=GameStoreDB;Integrated Security=True";
+        private string _connectionString = "Data Source=LAPTOP-H457D0PI\\MSSQLSERVER01;Initial Catalog=GameStoreDB;Integrated Security=True";
 
         public SettingsPage()
         {
@@ -73,7 +73,7 @@ namespace Do_An_LTTQ.View.UserPage
         private void SaveProfile(object sender, RoutedEventArgs e)
         {
             string newEmail = txtEmail.Text.Trim();
-            string finalAvatarPath = null;
+            string finalAvatarPath = _selectedAvatarPath;
 
             try
             {
@@ -95,28 +95,24 @@ namespace Do_An_LTTQ.View.UserPage
                 {
                     conn.Open();
                     // Dùng câu lệnh Update trực tiếp cho chắc chắn (vì SP của bạn có thể thiếu tham số Email)
-                    string query = "UPDATE USERS SET Email = @Email, AvatarURL = ISNULL(@AvatarURL, AvatarURL) WHERE UserID = @UserID";
-
-                    using (SqlCommand cmdUpdate = new SqlCommand(query, conn))
+                    using (SqlCommand cmd = new SqlCommand("sp_UpdateUserProfile", conn))
                     {
-                        cmdUpdate.Parameters.AddWithValue("@Email", newEmail);
-                        cmdUpdate.Parameters.AddWithValue("@UserID", App.CurrentUserID);
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@UserID", App.CurrentUserID);
+                        cmd.Parameters.AddWithValue("@Email", newEmail);
 
-                        if (finalAvatarPath != null)
-                            cmdUpdate.Parameters.AddWithValue("@AvatarURL", finalAvatarPath);
+                        if (!string.IsNullOrEmpty(finalAvatarPath))
+                            cmd.Parameters.AddWithValue("@AvatarURL", finalAvatarPath);
                         else
-                            cmdUpdate.Parameters.AddWithValue("@AvatarURL", DBNull.Value);
+                            cmd.Parameters.AddWithValue("@AvatarURL", DBNull.Value);
 
-                        cmdUpdate.ExecuteNonQuery();
+                        cmd.ExecuteNonQuery();
                     }
                 }
 
                 // 3. Cập nhật biến toàn cục để Dashboard hiển thị ngay
                 App.CurrentEmail = newEmail;
-                if (finalAvatarPath != null)
-                {
-                    App.CurrentAvatarURL = finalAvatarPath;
-                }
+                if (!string.IsNullOrEmpty(finalAvatarPath)) App.CurrentAvatarURL = finalAvatarPath;
 
                 MessageBox.Show("Lưu thay đổi thành công!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
             }
